@@ -1144,6 +1144,7 @@ enchantment_configuration:
       - CROSSBOWS
       - BOWS
       - SWORDS
+      - SPEARS
 
   crushing:
     description: '&8> For each piece of heavy armor the enemy is wearing(gold, iron, netherite), you deal &e2.5&8-&e3.75&8-&e5%&8 more damage'
@@ -1504,6 +1505,8 @@ compatible_with_values:
   - BOWS
   - CROSSBOWS
   - TRIDENTS
+  - MACES
+  - SPEARS
   - HELMETS
   - CHESTPLATES
   - LEGGINGS

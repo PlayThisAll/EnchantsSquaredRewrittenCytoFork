@@ -163,11 +163,12 @@ public class RapidShot extends CustomEnchant implements TriggerOnProjectileEvent
             } else {
                 newArrow = shooter.launchProjectile(arrow.getClass(), direction.clone().rotateAroundAxis(localUp, Math.toRadians(degree)));
             }
+            newArrow.setPickupStatus(AbstractArrow.PickupStatus.CREATIVE_ONLY);
             newArrow.setDamage(reducedDamage);
             newArrow.setCritical(arrow.isCritical());
             newArrow.setPierceLevel(arrow.getPierceLevel());
             newArrow.setFireTicks(arrow.getFireTicks());
-            newArrow.setBasePotionType(arrow.getBasePotionType());
+            if(arrow.getBasePotionType() != null) newArrow.setBasePotionType(arrow.getBasePotionType());
             newArrow.setWeapon(bow);
             if (arrows > 1) removeImmunityFrames(newArrow); // last arrow should not be exempt from immunity frame removal
         }

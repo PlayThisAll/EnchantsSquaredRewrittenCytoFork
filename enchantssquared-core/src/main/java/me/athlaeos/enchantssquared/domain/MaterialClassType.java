@@ -28,6 +28,7 @@ public enum MaterialClassType {
     HOES(Arrays.asList("WOODEN_HOE", "STONE_HOE", "GOLDEN_HOE", "IRON_HOE", "DIAMOND_HOE", "NETHERITE_HOE")),
     SHIELDS(Collections.singletonList("SHIELD")),
     MACES(Collections.singletonList("MACE")),
+    SPEARS(Arrays.asList("GOLDEN_SPEAR", "STONE_SPEAR", "WOODEN_SPEAR", "NETHERITE_SPEAR", "DIAMOND_SPEAR", "IRON_SPEAR")),
     BRUSHES(Collections.singletonList("BRUSH")),
     ALL(new ArrayList<>()),
     TRINKETS(new ArrayList<>());
