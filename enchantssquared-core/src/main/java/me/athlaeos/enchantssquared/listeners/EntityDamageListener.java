@@ -22,7 +22,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 
 public class EntityDamageListener implements Listener {
 
-    @EventHandler(priority = EventPriority.HIGH)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onEntityTakeDamage(EntityDamageEvent e){
         if (!e.isCancelled() && e.getDamage() > 0 &&
                 e.getEntity() instanceof LivingEntity &&
@@ -39,7 +39,7 @@ public class EntityDamageListener implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.HIGH)
     public void onEntityDamagedByEntity(EntityDamageByEntityEvent e){
         if (e.getDamager() instanceof Player && e.getEntity() instanceof Player &&
                 (EnchantsSquared.isWorldGuardHooked() && WorldGuardHook.getHook().isPVPDenied((Player) e.getEntity()))) return;

@@ -477,6 +477,7 @@ public class CustomEnchantManager {
             registerEnchant(new StepHeight(59, "step_height"));
             registerEnchant(new BlockReach(60, "block_reach"));
         }
+        registerEnchant(new Piercer(61, "piercer"));
     }
 
 

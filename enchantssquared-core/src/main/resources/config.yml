@@ -1499,6 +1499,26 @@ enchantment_configuration:
     compatible_with: # Not limited to ranged weapons
       - ALL
 
+  piercer:
+    description: '&8> &e50%&8 of base weapon damage pierces any damage reduction. &4INCOMPATIBLE WITH ANY OTHER ENCHANT'
+    enchant_name: '&cPiercer EX'
+    enabled: true
+    weight: 1
+    book_only: false
+    sword_damage_pierce: 0.5 # sword dmg mutliplier of damage that ignores any damage resistance
+    potion_damage_pierce: 0 # potion bonus dmg mutliplier of damage that ignores any damage resistance
+    allow_critical_hits: true # Use crits in damage calculations
+    trade_enabled: false
+    trade_cost_base_lower: 16
+    trade_cost_base_upper: 24
+    trade_cost_lv_lower: 8
+    trade_cost_lv_upper: 12
+    icon: NETHERITE_SWORD
+    is_treasure: false
+    compatible_with:
+      - SWORDS
+    # enchant incompatibility set in code
+
 # All usable compatible_with values, editing these values does not change anything
 compatible_with_values:
   - SWORDS
