@@ -478,6 +478,7 @@ public class CustomEnchantManager {
             registerEnchant(new BlockReach(60, "block_reach"));
         }
         registerEnchant(new Piercer(61, "piercer"));
+        registerEnchant(new SpeedMaster(62, "speed_master"));
     }
 
 

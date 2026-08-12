@@ -1519,6 +1519,26 @@ enchantment_configuration:
       - SWORDS
     # enchant incompatibility set in code
 
+  speed_master:
+    description: '&8> Grants the wielder and their mount &e10&8-&e15%&8-&e20%&8 increased movement speed'
+    enchant_name: '&7Speed Master %lv_roman%'
+    enabled: true
+    weight: 40
+    book_only: false
+    max_level: 3
+    max_level_table: 3
+    speed_base: 0.1 # Base % movement speed buff at level 1
+    speed_lv: 0.05 # % movement speed buff per level above 1
+    trade_enabled: true
+    trade_cost_base_lower: 16
+    trade_cost_base_upper: 32
+    trade_cost_lv_lower: 16
+    trade_cost_lv_upper: 32
+    icon: SUGAR
+    is_treasure: false
+    compatible_with:
+      - SPEARS
+
 # All usable compatible_with values, editing these values does not change anything
 compatible_with_values:
   - SWORDS
