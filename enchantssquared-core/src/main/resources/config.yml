@@ -1520,7 +1520,7 @@ enchantment_configuration:
     # enchant incompatibility set in code
 
   speed_master:
-    description: '&8> Grants the wielder and their mount &e10&8-&e15%&8-&e20%&8 increased movement speed'
+    description: '&8> Grants the wielder and their mount &e10%&8-&e15%&8-&e20%&8 increased movement speed'
     enchant_name: '&7Speed Master %lv_roman%'
     enabled: true
     weight: 40

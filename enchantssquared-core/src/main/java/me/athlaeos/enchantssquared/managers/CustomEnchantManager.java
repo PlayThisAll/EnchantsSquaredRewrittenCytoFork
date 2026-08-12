@@ -34,6 +34,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
@@ -351,7 +352,16 @@ public class CustomEnchantManager {
 
             Collection<Enchantment> vanillaEnchantmentsToRemove = new HashSet<>();
             item2Enchantments.entrySet().removeIf(e -> item1Enchantments.entrySet().stream().anyMatch(i -> i.getKey().conflictsWithEnchantment(e.getKey().getType())));
-            item2.getEnchantments().forEach((key, value) -> {
+            Map<Enchantment, Integer> vanillaEnchantments = null;
+            //why do enchanted books store enchants differently??? why????
+            if(item2.getType() == Material.ENCHANTED_BOOK) {
+                if(item2.getItemMeta() instanceof EnchantmentStorageMeta meta) {
+                    vanillaEnchantments = meta.getStoredEnchants();
+                }
+            } else {
+                vanillaEnchantments = item2.getEnchantments();
+            }
+            vanillaEnchantments.forEach((key, value) -> {
                 if (item1Enchantments.keySet().stream().anyMatch(i -> i.conflictsWithEnchantment(key.getKey().getKey()))) {
                     vanillaEnchantmentsToRemove.add(key);
                 }
