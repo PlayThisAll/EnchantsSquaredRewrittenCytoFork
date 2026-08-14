@@ -15,10 +15,15 @@ import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.EntityEffect;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityResurrectEvent;
+import org.bukkit.inventory.EntityEquipment;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.Bukkit;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -74,22 +79,70 @@ public class Piercer extends CustomEnchant implements TriggerOnAttackEnchantment
         double finalPotionDamage = potionDamageBase * potionMulti * attackStrength * critMulti;
         realAttacker.sendMessage("" + realAttacker.getEquipment().getItemInMainHand().getType());
         realAttacker.sendMessage("" + (realAttacker.getPotionEffect(PotionEffectType.STRENGTH) != null ? (realAttacker.getPotionEffect(PotionEffectType.STRENGTH).getAmplifier() + 1) * 3 : 0));
-        e.setDamage(e.getDamage() - finalSwordDamage - finalPotionDamage);
-        victim.setHealth(Math.max(victim.getHealth() - finalSwordDamage - finalPotionDamage, 0));
+        double finalDamage = finalSwordDamage + finalPotionDamage;
+        e.setDamage(e.getDamage() - finalDamage);
+        if(victim.getAbsorptionAmount() > finalDamage) {
+            victim.setAbsorptionAmount(victim.getAbsorptionAmount() - finalDamage);
+            return;
+        } else {
+            finalDamage -= victim.getAbsorptionAmount();
+            victim.setAbsorptionAmount(0D);
+        }
+        if (victim.getHealth() > finalDamage || getTotemSlot(victim) == null) victim.setHealth(Math.max(victim.getHealth() - finalDamage, 0));
+        else resurrectCheck(victim);
     }
 
     //yes, this is a hack because I couldn't be bothered to properly get the damage values.
     //I know I should do better, but I want to get it working first.
     private static double getSwordDamage(ItemStack item) {
-    return switch (item.getType()) {
-        case WOODEN_SWORD, GOLDEN_SWORD -> 4.0;
-        case STONE_SWORD -> 5.0;
-        case IRON_SWORD -> 6.0;
-        case DIAMOND_SWORD -> 7.0;
-        case NETHERITE_SWORD -> 8.0;
-        default -> 0.0;
-    };
-}
+        return switch (item.getType()) {
+            case WOODEN_SWORD, GOLDEN_SWORD -> 4.0;
+            case STONE_SWORD -> 5.0;
+            case IRON_SWORD -> 6.0;
+            case DIAMOND_SWORD -> 7.0;
+            case NETHERITE_SWORD -> 8.0;
+            default -> 0.0;
+        };
+    }
+
+    private static EquipmentSlot getTotemSlot(LivingEntity victim) {
+        EquipmentSlot totemSlot = null;
+        EntityEquipment equipment = victim.getEquipment();
+        //read the item to see if it has a tag in the future, for now... ye
+        if(equipment.getItemInOffHand().getType() == Material.TOTEM_OF_UNDYING) totemSlot = EquipmentSlot.OFF_HAND;
+        if(equipment.getItemInMainHand().getType() == Material.TOTEM_OF_UNDYING) totemSlot = EquipmentSlot.HAND;
+        return totemSlot;
+    }
+    //technically there's NMS but I have no idea how to use that so this will do for now
+    private static void resurrectCheck(LivingEntity victim) {
+            EquipmentSlot totemSlot = getTotemSlot(victim);
+            EntityEquipment equipment = victim.getEquipment();
+
+            EntityResurrectEvent event = new EntityResurrectEvent(victim, totemSlot);
+            Bukkit.getPluginManager().callEvent(event);
+            if(event.isCancelled()) {
+                return;
+            }
+            if (totemSlot == EquipmentSlot.HAND) equipment.setItemInMainHand(null);
+            else equipment.setItemInOffHand(null);
+
+            victim.setHealth(1.0);
+            victim.setFireTicks(0);
+            victim.setFallDistance(0);
+
+            victim.clearActivePotionEffects();
+            victim.addPotionEffect(
+                new PotionEffect(PotionEffectType.REGENERATION, 900, 1)
+            );
+            victim.addPotionEffect(
+                new PotionEffect(PotionEffectType.ABSORPTION, 100, 1)
+            );
+            victim.addPotionEffect(
+                new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 800, 0)
+            );
+            victim.playEffect(EntityEffect.PROTECTED_FROM_DEATH);
+    }
+
     @Override
     public String getDisplayEnchantment() {
         return config.getString("enchantment_configuration.piercer.enchant_name", getType())
