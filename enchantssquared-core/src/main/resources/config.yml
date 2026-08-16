@@ -1559,7 +1559,35 @@ enchantment_configuration:
     icon: ARMOR_STAND
     is_treasure: false
     compatible_with:
-      - BOOTS    
+      - BOOTS
+
+  void_touch:
+    description: '&8>Applies "Void Touched" status effect that, over &e3&8-&e4&8-&e5&8 seconds, increases damage up to &e30&8-&e40&8-&e50%&8 for the user'
+    enchant_name: '&Void Strike %lv_roman%'
+    enabled: true
+    weight: 1
+    book_only: false
+    max_level: 3
+    max_level_table: 3
+    damage_base: 0.3
+    damage_lv: 0.1
+    time_base: 60 #time in ticks
+    time_lv: 20
+    ranged_damage_penalty: 0 #Perfectionist has the option, adding for parity and potential tweaking
+    trade_enabled: false
+    trade_cost_base_lower: 16
+    trade_cost_base_upper: 32
+    trade_cost_lv_lower: 16
+    trade_cost_lv_upper: 32
+    icon: CRYING_OBSIDIAN
+    is_treasure: false
+    compatible_with:
+      - SWORDS
+      - BOWS
+      - CROSSBOWS
+      - TRIDENTS
+      - MACES
+      - SPEARS
 
 # All usable compatible_with values, editing these values does not change anything
 compatible_with_values:

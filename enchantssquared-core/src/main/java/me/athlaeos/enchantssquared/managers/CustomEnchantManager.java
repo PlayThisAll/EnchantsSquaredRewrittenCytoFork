@@ -490,6 +490,7 @@ public class CustomEnchantManager {
         registerEnchant(new Piercer(61, "piercer"));
         registerEnchant(new SpeedMaster(62, "speed_master"));
         registerEnchant(new Cowardice(63, "cowardice"));
+        registerEnchant(new VoidTouch(64, "void_touch"));
     }
 
 
