@@ -73,6 +73,9 @@ public class VoidTouch extends CustomEnchant implements TriggerOnAttackEnchantme
                         if (entry.getValue() < getTickTime()) return true;
                         if (victimEntity == null) return true;
                         if (attackerEntity != null) attackerEntity.spawnParticle(effect, victimEntity.getLocation().add(0, 1.25, 0), 10, offsets.getX(), offsets.getY(), offsets.getZ());
+                        if (victimEntity instanceof Player victimPlayer) {
+                            victimPlayer.spawnParticle(effect, victimPlayer.getLocation().add(0, 1.25, 0), 10, offsets.getX(), offsets.getY(), offsets.getZ());
+                        }
                         return false;
                     });
                 });

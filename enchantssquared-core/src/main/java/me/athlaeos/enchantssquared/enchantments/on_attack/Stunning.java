@@ -1,5 +1,6 @@
 package me.athlaeos.enchantssquared.enchantments.on_attack;
 
+import me.athlaeos.enchantssquared.EnchantsSquared;
 import me.athlaeos.enchantssquared.config.ConfigManager;
 import me.athlaeos.enchantssquared.animations.Animation;
 import me.athlaeos.enchantssquared.domain.MaterialClassType;
@@ -9,19 +10,27 @@ import me.athlaeos.enchantssquared.utility.EntityUtils;
 import me.athlaeos.enchantssquared.utility.ItemUtils;
 import me.athlaeos.enchantssquared.utility.PotionEffectMappings;
 import me.athlaeos.enchantssquared.utility.Utils;
+
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.UUID;
 
-public class Stunning extends CustomEnchant implements TriggerOnAttackEnchantment {
+public class Stunning extends CustomEnchant implements TriggerOnAttackEnchantment, Listener {
 
     private final double chanceBase;
     private final double chanceLv;
@@ -33,6 +42,8 @@ public class Stunning extends CustomEnchant implements TriggerOnAttackEnchantmen
     private final YamlConfiguration config;
     private final Collection<String> incompatibleVanillaEnchantments;
     private final Collection<String> incompatibleCustomEnchantments;
+
+    private final Collection<UUID> stunnedPlayers;
 
     public Stunning(int id, String type) {
         super(id, type);
@@ -47,6 +58,8 @@ public class Stunning extends CustomEnchant implements TriggerOnAttackEnchantmen
         this.incompatibleCustomEnchantments = new HashSet<>(config.getStringList("enchantment_configuration.stunning.incompatible_custom_enchantments"));
         this.sound = Utils.soundFromString(config.getString("enchantment_configuration.stunning.sound"), Sound.ENCHANT_THORNS_HIT);
         this.particleAnimation = config.getString("enchantment_configuration.stunning.animation");
+
+        this.stunnedPlayers = new HashSet<>();
 
         this.icon = ItemUtils.getIconFromConfig(config, "enchantment_configuration.stunning.icon", createIcon(Material.ANVIL));
     }
@@ -75,6 +88,15 @@ public class Stunning extends CustomEnchant implements TriggerOnAttackEnchantmen
         if (Utils.getRandom().nextDouble() < chance){
             int duration = durationBase + ((level - 1) * durationLv);
 
+            if(victim instanceof Player playerVictim) {
+                stunnedPlayers.add(playerVictim.getUniqueId());
+                new BukkitRunnable(){
+                    public void run() {
+                        stunnedPlayers.remove(playerVictim.getUniqueId());
+                    }
+                }.runTaskLater(EnchantsSquared.getPlugin(), duration);
+            }
+
             EntityUtils.applyPotionEffectIfStronger(victim,
                     new PotionEffect(PotionEffectMappings.SLOWNESS.getPotionEffectType(), duration, 15, true, false, true)
             );
@@ -95,6 +117,19 @@ public class Stunning extends CustomEnchant implements TriggerOnAttackEnchantmen
             Animation animation = AnimationRegistry.get(particleAnimation);
             if (animation != null) animation.play(victim.getEyeLocation());
         }
+    }
+
+    @EventHandler
+    public void onMove(PlayerMoveEvent e){
+        if (stunnedPlayers.contains(e.getPlayer().getUniqueId())) {
+            Location from = e.getFrom();
+            Location to = e.getTo();
+            to.setX(from.getX());
+            to.setZ(from.getZ());
+            if(to.getY() > from.getY() ) {to.setY(from.getY());}
+            e.setTo(to);
+        }
+        
     }
 
     @Override
