@@ -39,16 +39,16 @@ public class ReloadCommand implements Command {
 
 	@Override
 	public String getFailureMessage() {
-		return "&4/es reload";
+		return "&4/ec reload";
 	}
 
 	@Override
 	public String[] getHelpEntry() {
 		return new String[]{
 				ChatUtils.chat("&8&m                                             "),
-				ChatUtils.chat("&d/es reload"),
+				ChatUtils.chat("&d/ec reload"),
 				ChatUtils.chat("&7" + reload_description),
-				ChatUtils.chat("&7> &des.reload")
+				//ChatUtils.chat("&7> &des.reload")
 		};
 	}
 

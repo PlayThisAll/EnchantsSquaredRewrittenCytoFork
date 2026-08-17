@@ -188,16 +188,16 @@ public class GetEnchantedItemCommand implements Command {
 
 	@Override
 	public String getFailureMessage() {
-		return "&c/es give [player] [item] [amount] <custom=enchant:level,enchant:level...> <name=&8Example_name> <lore=&7Loreline_1/n&7Loreline_2> <enchants=enchant:level,enchant:level...>";
+		return "&c/ec give [player] [item] [amount] <custom=enchant:level,enchant:level...> <name=&8Example_name> <lore=&7Loreline_1/n&7Loreline_2> <enchants=enchant:level,enchant:level...>";
 	}
 
 	@Override
 	public String[] getHelpEntry() {
 		return new String[]{
 				ChatUtils.chat("&8&m                                             "),
-				ChatUtils.chat("&d/es give [player] [item] [amount] <custom=enchant:level,enchant:level...> <name=&8Example_name> <lore=&7Loreline_1/n&7Loreline_2> <enchants=enchant:level,enchant:level...>"),
+				ChatUtils.chat("&d/ec give [player] [item] [amount] <custom=enchant:level,enchant:level...> <name=&8Example_name> <lore=&7Loreline_1/n&7Loreline_2> <enchants=enchant:level,enchant:level...>"),
 				ChatUtils.chat("&7" + give_item_description),
-				ChatUtils.chat("&7> &des.enchant")
+				//ChatUtils.chat("&7> &des.enchant")
 		};
 	}
 

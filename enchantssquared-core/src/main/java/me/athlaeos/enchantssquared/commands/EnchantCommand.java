@@ -83,16 +83,16 @@ public class EnchantCommand implements Command {
 
 	@Override
 	public String getFailureMessage() {
-		return "&c/es enchant [enchantment] <level>";
+		return "&c/ec enchant [enchantment] <level>";
 	}
 
 	@Override
 	public String[] getHelpEntry() {
 		return new String[]{
 				ChatUtils.chat("&8&m                                             "),
-				ChatUtils.chat("&d/es enchant [enchantment] <level>"),
+				ChatUtils.chat("&d/ec enchant [enchantment] <level>"),
 				ChatUtils.chat("&7" + enchant_description),
-				ChatUtils.chat("&7> &des.enchant")
+				//ChatUtils.chat("&7> &des.enchant")
 		};
 	}
 
