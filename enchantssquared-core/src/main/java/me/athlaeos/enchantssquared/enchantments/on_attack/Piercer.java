@@ -8,6 +8,7 @@ import me.athlaeos.enchantssquared.domain.MaterialClassType;
 import me.athlaeos.enchantssquared.enchantments.CustomEnchant;
 import me.athlaeos.enchantssquared.enchantments.LevelService;
 import me.athlaeos.enchantssquared.enchantments.LevelsFromMainHandAndEquipment;
+import me.athlaeos.enchantssquared.listeners.PrePlayerAttackEntityEventListener;
 import me.athlaeos.enchantssquared.utility.EntityUtils;
 import me.athlaeos.enchantssquared.utility.ItemUtils;
 import me.athlaeos.valhallammo.playerstats.EntityCache;
@@ -28,6 +29,7 @@ import org.bukkit.Bukkit;
 import java.util.Collection;
 import java.util.HashSet;
 
+
 public class Piercer extends CustomEnchant implements TriggerOnAttackEnchantment {
 
     private final double swordMulti;
@@ -37,6 +39,7 @@ public class Piercer extends CustomEnchant implements TriggerOnAttackEnchantment
     private final YamlConfiguration config;
     private final Collection<String> incompatibleVanillaEnchantments;
     private final Collection<String> incompatibleCustomEnchantments;
+    private final PrePlayerAttackEntityEventListener cooldownListener;
 
     public Piercer(int id, String type) {
         super(id, type);
@@ -48,7 +51,7 @@ public class Piercer extends CustomEnchant implements TriggerOnAttackEnchantment
         this.naturallyCompatibleWith = new HashSet<>(config.getStringList("enchantment_configuration.piercer.compatible_with"));
         this.incompatibleVanillaEnchantments = new HashSet<>(config.getStringList("enchantment_configuration.piercer.incompatible_vanilla_enchantments"));
         this.incompatibleCustomEnchantments = new HashSet<>(config.getStringList("enchantment_configuration.piercer.incompatible_custom_enchantments"));
-
+        this.cooldownListener = EnchantsSquared.getPlugin().getPrePlayerAttackEntityEventListener();
         this.icon = ItemUtils.getIconFromConfig(config, "enchantment_configuration.piercer.icon", createIcon(Material.NETHERITE_SWORD));
     }
 
@@ -68,17 +71,10 @@ public class Piercer extends CustomEnchant implements TriggerOnAttackEnchantment
         double swordDamageBase = getSwordDamage(realAttacker.getEquipment().getItemInMainHand());
         double potionDamageBase = (realAttacker.getPotionEffect(PotionEffectType.STRENGTH) != null ? (realAttacker.getPotionEffect(PotionEffectType.STRENGTH).getAmplifier() + 1) * 3 : 0);
         double attackStrength = 1D;
-        if (realAttacker instanceof Player player) {
-            //figure out the player cooldown, ie how to get it
-            //tried not to reverse engineer, but kinda have to.
-            attackStrength = e.getDamage() / ((swordDamageBase * critMultiBase) + potionDamageBase);
-            if(attackStrength > 1.05) attackStrength = 1;
-        }
+        if(e.getDamager() instanceof Player player) attackStrength = cooldownListener.getAttackCooldown(player.getUniqueId());
         double critMulti = (allowCrits && e.isCritical()) ? 1.5 : 1;
         double finalSwordDamage = swordDamageBase * swordMulti * critMulti * attackStrength;
         double finalPotionDamage = potionDamageBase * potionMulti * attackStrength * critMulti;
-        realAttacker.sendMessage("" + realAttacker.getEquipment().getItemInMainHand().getType());
-        realAttacker.sendMessage("" + (realAttacker.getPotionEffect(PotionEffectType.STRENGTH) != null ? (realAttacker.getPotionEffect(PotionEffectType.STRENGTH).getAmplifier() + 1) * 3 : 0));
         double finalDamage = finalSwordDamage + finalPotionDamage;
         e.setDamage(e.getDamage() - finalDamage);
         if(victim.getAbsorptionAmount() > finalDamage) {

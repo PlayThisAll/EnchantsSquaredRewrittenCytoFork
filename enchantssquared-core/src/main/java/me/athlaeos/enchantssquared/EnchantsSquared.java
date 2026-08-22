@@ -56,6 +56,7 @@ public final class EnchantsSquared extends JavaPlugin {
     private McmmoSalvageListener mcmmoSalvageListener = null;
     private McmmoArcaneFishingListener mcmmoArcaneFishingListener = null;
     private McmmoRepairListener mcmmoRepairListener = null;
+    private PrePlayerAttackEntityEventListener prePlayerAttackEntityEventListener = null;
 
     @Override
     public void onLoad() {
@@ -118,6 +119,7 @@ public final class EnchantsSquared extends JavaPlugin {
         menuListener = registerListener(new MenuListener());
         itemDamageListener = registerListener(new ItemDamageListener());
         projectileListener = registerListener(new ProjectileListener());
+        prePlayerAttackEntityEventListener = registerListener(new PrePlayerAttackEntityEventListener());
         if(isMcMMOHooked()){
             mcmmoSalvageListener = registerListener(new McmmoSalvageListener());
             mcmmoArcaneFishingListener = registerListener(new McmmoArcaneFishingListener());
@@ -287,6 +289,10 @@ public final class EnchantsSquared extends JavaPlugin {
 
     public ProjectileListener getProjectileListener() {
         return projectileListener;
+    }
+
+    public PrePlayerAttackEntityEventListener getPrePlayerAttackEntityEventListener() {
+        return prePlayerAttackEntityEventListener;
     }
 
     public McmmoSalvageListener getMcmmoSalvageListener() {

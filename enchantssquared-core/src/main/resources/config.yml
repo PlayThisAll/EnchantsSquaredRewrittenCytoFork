@@ -1064,6 +1064,7 @@ enchantment_configuration:
       - AXES
       - BOWS
       - CROSSBOWS
+      - TRIDENTS
 
   ground_stomping:
     description: '&8> Immunity to fall damage. Landing after great falls deals damage in a radius. Damage and radius increase with distance, scaling &e60&8-&e100% &8faster. While sneaking, you fall &e2.5x &8faster. Effect has a &e20&8-&e10 second &8cooldown'
@@ -1145,6 +1146,7 @@ enchantment_configuration:
       - BOWS
       - SWORDS
       - SPEARS
+      - TRIDENTS
 
   crushing:
     description: '&8> For each piece of heavy armor the enemy is wearing(gold, iron, netherite), you deal &e2.5&8-&e3.75&8-&e5%&8 more damage'
