@@ -1545,7 +1545,7 @@ enchantment_configuration:
     description: '&8>You deal &e20&8-&e30&8-&e40%&8 more damage while at full health.'
     enchant_name: '&7Cowardice %lv_roman%'
     enabled: true
-    weight: 10
+    weight: 15
     book_only: false
     max_level: 3
     max_level_table: 3
@@ -1559,15 +1559,15 @@ enchantment_configuration:
     trade_cost_lv_lower: 16
     trade_cost_lv_upper: 32
     icon: ARMOR_STAND
-    is_treasure: false
+    is_treasure: true
     compatible_with:
       - BOOTS
 
   void_touch:
     description: '&8>Applies "Void Touched" status effect that, over &e3&8-&e4&8-&e5&8 seconds, increases damage up to &e30&8-&e40&8-&e50%&8 for the user'
-    enchant_name: '&Void Strike %lv_roman%'
+    enchant_name: '&7Void Strike %lv_roman%'
     enabled: true
-    weight: 1
+    weight: 15
     book_only: false
     max_level: 3
     max_level_table: 3
@@ -1576,20 +1576,45 @@ enchantment_configuration:
     time_base: 60 #time in ticks
     time_lv: 20
     ranged_damage_penalty: 0 #Perfectionist has the option, adding for parity and potential tweaking
-    trade_enabled: false
+    trade_enabled: true
     trade_cost_base_lower: 16
     trade_cost_base_upper: 32
     trade_cost_lv_lower: 16
     trade_cost_lv_upper: 32
     icon: CRYING_OBSIDIAN
-    is_treasure: false
+    is_treasure: true
     compatible_with:
       - SWORDS
+      - AXES
       - BOWS
       - CROSSBOWS
       - TRIDENTS
       - MACES
       - SPEARS
+
+  pain_cycle:
+    description: '&8>Consumes &e5&8-&e10%&8 of your hp on each hit, after &e5&8 hits your next one will increase base damage based on health consumed with half efficiency.'
+    enchant_name: '&7Pain Cycle %lv_roman%'
+    enabled: true
+    weight: 15
+    book_only: false
+    max_level: 3
+    max_level_table: 3
+    hp_drain_base: 0.05 #% of hp drained, 1 being 100%
+    hp_drain_lv: 0.05
+    damage_efficiency: 0.5
+    safe_threshold: 0 #% of health that can't go under when using the enchant.
+    trade_enabled: true
+    trade_cost_base_lower: 16
+    trade_cost_base_upper: 32
+    trade_cost_lv_lower: 16
+    trade_cost_lv_upper: 32
+    icon: MELON_SLICE
+    is_treasure: true
+    compatible_with:
+      - SWORDS
+      - AXES
+      - TRIDENTS
 
 # All usable compatible_with values, editing these values does not change anything
 compatible_with_values:

@@ -11,7 +11,6 @@ import me.athlaeos.enchantssquared.enchantments.LevelsFromMainHandAndEquipment;
 import me.athlaeos.enchantssquared.listeners.PrePlayerAttackEntityEventListener;
 import me.athlaeos.enchantssquared.utility.EntityUtils;
 import me.athlaeos.enchantssquared.utility.ItemUtils;
-import me.athlaeos.valhallammo.playerstats.EntityCache;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.LivingEntity;
@@ -52,6 +51,7 @@ public class Piercer extends CustomEnchant implements TriggerOnAttackEnchantment
         this.incompatibleVanillaEnchantments = new HashSet<>(config.getStringList("enchantment_configuration.piercer.incompatible_vanilla_enchantments"));
         this.incompatibleCustomEnchantments = new HashSet<>(config.getStringList("enchantment_configuration.piercer.incompatible_custom_enchantments"));
         this.cooldownListener = EnchantsSquared.getPlugin().getPrePlayerAttackEntityEventListener();
+
         this.icon = ItemUtils.getIconFromConfig(config, "enchantment_configuration.piercer.icon", createIcon(Material.NETHERITE_SWORD));
     }
 

@@ -19,9 +19,6 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Projectile;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDeathEvent;
-import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
@@ -74,7 +71,12 @@ public class VoidTouch extends CustomEnchant implements TriggerOnAttackEnchantme
                         if (victimEntity == null) return true;
                         if (attackerEntity != null) attackerEntity.spawnParticle(effect, victimEntity.getLocation().add(0, 1.25, 0), 10, offsets.getX(), offsets.getY(), offsets.getZ());
                         if (victimEntity instanceof Player victimPlayer) {
-                            victimPlayer.spawnParticle(effect, victimPlayer.getLocation().add(0, 1.25, 0), 10, offsets.getX(), offsets.getY(), offsets.getZ());
+                            victimPlayer.spawnParticle(
+                                effect,
+                                victimPlayer.getLocation().add(0, 1.25, 0),
+                                10,
+                                offsets.getX(), offsets.getY(), offsets.getZ()
+                            );
                         }
                         return false;
                     });
@@ -115,40 +117,6 @@ public class VoidTouch extends CustomEnchant implements TriggerOnAttackEnchantme
         playerEntry = new HashMap<>();
         playerEntry.put(victim.getUniqueId(), getTickTime() + Math.round(maxLength));
         voidTouchedSet.put(realAttacker.getUniqueId(), playerEntry);
-
-        /*plan:
-        check if the attack UUID exists in voidTouchedSet
-        +-check if the victim is present on the list
-        +-check if it's still under timer
-        if all are true, calculate damage
-        if any is false, add new entry and remove previous if applicable
-        would be best if I could get some particles per second :3
-        */
-
-        /*
-        LivingEntity victim = (LivingEntity) e.getEntity();
-        if (ignoreArrows.contains(e.getDamager().getUniqueId()) || shouldEnchantmentCancel(level, realAttacker, victim.getLocation())
-        || e.getDamager() instanceof LivingEntity) return;
-
-        double finalRadius = this.radius_base + ((level - 1) * radius_lv);
-        double finalDamage = this.aoe_damage_base + ((level - 1) * aoe_damage_lv);
-        double damage = e.getDamage();
-        if (explosion){
-            realAttacker.getWorld().spawnParticle(Particle.valueOf(MinecraftVersion.currentVersionNewerThan(MinecraftVersion.MINECRAFT_1_20_5) ? "EXPLOSION" : "EXPLOSION_NORMAL"), victim.getLocation(), 0);
-            victim.getWorld().playSound(victim.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 1F, 1F);
-        }
-        Collection<Entity> surroundingEntities = victim.getWorld().getNearbyEntities(victim.getLocation(), finalRadius, finalRadius, finalRadius);
-        surroundingEntities.remove(victim);
-        surroundingEntities.remove(e.getDamager());
-        surroundingEntities.remove(realAttacker);
-        ignoreArrows.add(e.getDamager().getUniqueId());
-        for (Entity entity : surroundingEntities){
-            if (entity instanceof LivingEntity && !EntityClassificationType.isMatchingClassification(entity.getType(), EntityClassificationType.UNALIVE)){
-                ((LivingEntity) entity).damage(damage * finalDamage, e.getDamager());
-            }
-        }
-        ignoreArrows.remove(e.getDamager().getUniqueId());
-        */
     }
 
     private long getTickTime() {

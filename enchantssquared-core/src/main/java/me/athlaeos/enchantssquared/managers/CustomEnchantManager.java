@@ -491,6 +491,7 @@ public class CustomEnchantManager {
         registerEnchant(new SpeedMaster(62, "speed_master"));
         registerEnchant(new Cowardice(63, "cowardice"));
         registerEnchant(new VoidTouch(64, "void_touch"));
+        registerEnchant(new PainCycle(65, "pain_cycle"));
     }
 
 

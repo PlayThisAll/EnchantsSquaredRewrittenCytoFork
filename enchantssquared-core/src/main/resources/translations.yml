@@ -136,3 +136,7 @@ menu_description: "Shows a list of all enabled enchants in a handy GUI"
 # Error message when the the command sender enters a player name of a player that isn"t online
 error_player_not_found: "&cPlayer not found"
 error_invalid_targeter: "&cMalformed target selector"
+
+
+# Enchant communications
+blood_strike_ready: "&4 [Pain Cycle]Next attack will be powered up"
