@@ -1393,7 +1393,7 @@ enchantment_configuration:
   damage_reduction:
     description: '&8> Grants the wearer &e10&8-&e15&8-&e20%&8 damage reduction while wearing'
     enchant_name: '&7Dragonhide %lv_roman%'
-    enabled: false
+    enabled: true
     weight: 1
     book_only: false
     max_level: 3
@@ -1405,7 +1405,7 @@ enchantment_configuration:
     trade_cost_base_upper: 32
     trade_cost_lv_lower: 16
     trade_cost_lv_upper: 32
-    icon: SUGAR
+    icon: DRAGON_HEAD
     is_treasure: true
     compatible_with:
       - CHESTPLATES
@@ -1593,7 +1593,7 @@ enchantment_configuration:
       - SPEARS
 
   pain_cycle:
-    description: '&8>Consumes &e5&8-&e10%&8 of your hp on each hit, after &e5&8 hits your next one will increase base damage based on health consumed with half efficiency.'
+    description: '&8>Consumes &e5&8-&e10%&8 of your hp on each hit, after &e5&8 hits your next one will increase base damage based on health consumed with half efficiency'
     enchant_name: '&7Pain Cycle %lv_roman%'
     enabled: true
     weight: 15
@@ -1615,6 +1615,52 @@ enchantment_configuration:
       - SWORDS
       - AXES
       - TRIDENTS
+
+  overclock:
+    description: '&8>deals &e50&8-&e100%&8 more damage on hit, but mace goes on a &e40&8-&e60&8 second cooldown afterwards'
+    enchant_name: '&7Overclock %lv_roman%'
+    enabled: false
+    weight: 10
+    book_only: false
+    max_level: 2
+    max_level_table: 2
+    damage_base: 0.5
+    damage_lv: 0.5
+    cooldown_base: 800 #in ticks
+    cooldown_lv: 400
+    trade_enabled: true
+    trade_cost_base_lower: 16
+    trade_cost_base_upper: 32
+    trade_cost_lv_lower: 16
+    trade_cost_lv_upper: 32
+    icon: CLOCK
+    is_treasure: true
+    compatible_with:
+      - MACES
+
+  mace_aoe:
+    description: '&8>deals &e20&8-&e40&8-&e60%&8 of damage to entities in a 1.5 block radius'
+    enchant_name: '&7Impact Zone %lv_roman%'
+    enabled: false
+    weight: 10
+    book_only: false
+    max_level: 2
+    max_level_table: 2
+    damage_base: 0.2
+    damage_lv: 0.2
+    effect_radius: 1.5 #in blocks
+    trade_enabled: true
+    trade_cost_base_lower: 16
+    trade_cost_base_upper: 32
+    trade_cost_lv_lower: 16
+    trade_cost_lv_upper: 32
+    icon: FIRE_CHARGE
+    is_treasure: true
+    compatible_with:
+      - MACES
+    incompatible_vanilla_enchantments:
+      - density
+      - breach
 
 # All usable compatible_with values, editing these values does not change anything
 compatible_with_values:

@@ -1,5 +1,6 @@
 package me.athlaeos.enchantssquared.enchantments.on_attack;
 
+import me.athlaeos.enchantssquared.EnchantsSquared;
 import me.athlaeos.enchantssquared.config.ConfigManager;
 import me.athlaeos.enchantssquared.domain.MaterialClassType;
 import me.athlaeos.enchantssquared.enchantments.CustomEnchant;
@@ -8,9 +9,11 @@ import me.athlaeos.enchantssquared.enchantments.LevelsFromMainHandAndEquipment;
 import me.athlaeos.enchantssquared.enchantments.LevelsFromOffHandAndEquipment;
 import me.athlaeos.enchantssquared.enchantments.on_heal.TriggerOnHealthRegainedEnchantment;
 import me.athlaeos.enchantssquared.utility.ItemUtils;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.inventory.ItemStack;
@@ -18,28 +21,28 @@ import org.bukkit.inventory.ItemStack;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class Toxic extends CustomEnchant implements TriggerOnAttackEnchantment, TriggerOnHealthRegainedEnchantment {
+public class Overclock extends CustomEnchant implements TriggerOnAttackEnchantment {
 
     private final int durationBase;
     private final int durationLv;
-    private final double amplifierBase;
-    private final double amplifierLv;
+    private final double damageBase;
+    private final double damageLv;
     private final YamlConfiguration config;
     private final Collection<String> incompatibleVanillaEnchantments;
     private final Collection<String> incompatibleCustomEnchantments;
 
-    public Toxic(int id, String type) {
+    public Overclock(int id, String type) {
         super(id, type);
         this.config = ConfigManager.getInstance().getConfig("config.yml").get();
-        this.amplifierBase = config.getDouble("enchantment_configuration.toxic.healing_reduction_base");
-        this.amplifierLv = config.getDouble("enchantment_configuration.toxic.healing_reduction_lv");
-        this.durationBase = config.getInt("enchantment_configuration.toxic.duration_base");
-        this.durationLv = config.getInt("enchantment_configuration.toxic.duration_lv");
-        this.naturallyCompatibleWith = new HashSet<>(config.getStringList("enchantment_configuration.toxic.compatible_with"));
-        this.incompatibleVanillaEnchantments = new HashSet<>(config.getStringList("enchantment_configuration.toxic.incompatible_vanilla_enchantments"));
-        this.incompatibleCustomEnchantments = new HashSet<>(config.getStringList("enchantment_configuration.toxic.incompatible_custom_enchantments"));
+        this.damageBase = config.getDouble("enchantment_configuration.overclock.damage_base");
+        this.damageLv = config.getDouble("enchantment_configuration.overclock.damage_lv");
+        this.durationBase = config.getInt("enchantment_configuration.overclock.cooldown_base");
+        this.durationLv = config.getInt("enchantment_configuration.overclock.cooldown_lv");
+        this.naturallyCompatibleWith = new HashSet<>(config.getStringList("enchantment_configuration.overclock.compatible_with"));
+        this.incompatibleVanillaEnchantments = new HashSet<>(config.getStringList("enchantment_configuration.overclock.incompatible_vanilla_enchantments"));
+        this.incompatibleCustomEnchantments = new HashSet<>(config.getStringList("enchantment_configuration.overclock.incompatible_custom_enchantments"));
 
-        this.icon = ItemUtils.getIconFromConfig(config, "enchantment_configuration.toxic.icon", createIcon(Material.BONE));
+        this.icon = ItemUtils.getIconFromConfig(config, "enchantment_configuration.overclock.icon", createIcon(Material.BONE));
     }
 
     private final LevelService mainHandLevels = new LevelsFromMainHandAndEquipment(this);
@@ -48,60 +51,49 @@ public class Toxic extends CustomEnchant implements TriggerOnAttackEnchantment, 
     public LevelService getLevelService(boolean offHand, LivingEntity entity) {
         return offHand ? offHandLevels : mainHandLevels;
     }
-    private final Map<UUID, Map<Integer, Long>> afflictedEntities = new HashMap<>();
 
     @Override
     public void onAttack(EntityDamageByEntityEvent e, int level, LivingEntity realAttacker) {
         LivingEntity victim = (LivingEntity) e.getEntity();
         if (shouldEnchantmentCancel(level, realAttacker, victim.getLocation())) return;
-
-        int duration = durationBase + ((level - 1) * durationLv);
-
-        afflictEntity(victim.getUniqueId(), level, 50 * duration);
-    }
-
-    @Override
-    public void onHeal(EntityRegainHealthEvent e, int level) {
-        int antihealLevel = getHealingReductionLevel(e.getEntity().getUniqueId());
-        if (antihealLevel > 0){
-            double antiheal = amplifierBase + ((antihealLevel - 1) * amplifierLv);
-            e.setAmount(e.getAmount() * Math.max(0, 1 - antiheal));
+        double damageMulti = 1 + damageBase + ((level - 1) * damageLv);
+        int cooldownDuration = durationBase + ((level - 1) * durationLv);
+        if(realAttacker instanceof Player player) {
+            if(player.hasCooldown(Material.MACE)) {
+                e.setCancelled(true);
+                return;
+            }
+            e.setDamage(e.getDamage() * damageMulti);
+            new BukkitRunnable(){
+                @Override
+                public void run() {
+                    player.setCooldown(Material.MACE, cooldownDuration);
+                }
+            }.runTaskLater(EnchantsSquared.getPlugin(), 1L);
         }
-    }
-
-    public void afflictEntity(UUID entity, int level, int timeMS){
-        Map<Integer, Long> existingEntries = afflictedEntities.getOrDefault(entity, new HashMap<>());
-        existingEntries.put(level, System.currentTimeMillis() + timeMS);
-        afflictedEntities.put(entity, existingEntries);
-    }
-
-    public int getHealingReductionLevel(UUID player){
-        Map<Integer, Long> toxicDetails = afflictedEntities.getOrDefault(player, new HashMap<>());
-        Collection<Integer> levelCollection = toxicDetails.keySet().stream().filter(
-                i -> toxicDetails.get(i) > System.currentTimeMillis()).collect(Collectors.toSet());
-        return levelCollection.isEmpty() ? 0 : Collections.max(levelCollection);
+        
     }
 
     @Override
     public String getDisplayEnchantment() {
-        return config.getString("enchantment_configuration.toxic.enchant_name", getType())
+        return config.getString("enchantment_configuration.overclock.enchant_name", getType())
                 .replace(" %lv_roman%", "")
                 .replace(" %lv_number%", "");
     }
 
     @Override
     public String getDescription() {
-        return config.getString("enchantment_configuration.toxic.description");
+        return config.getString("enchantment_configuration.overclock.description");
     }
 
     @Override
     public boolean isEnabled() {
-        return config.getBoolean("enchantment_configuration.toxic.enabled");
+        return config.getBoolean("enchantment_configuration.overclock.enabled");
     }
 
     @Override
     public String getRequiredPermission() {
-        return "es.enchant.toxic";
+        return "es.enchant.overclock";
     }
 
     @Override
@@ -117,57 +109,57 @@ public class Toxic extends CustomEnchant implements TriggerOnAttackEnchantment, 
 
     @Override
     public boolean isFunctionallyCompatible(Material material) {
-        return true;
+        return material == Material.MACE;
     }
 
     @Override
     public int getWeight() {
-        return config.getInt("enchantment_configuration.toxic.weight");
+        return config.getInt("enchantment_configuration.overclock.weight");
     }
 
     @Override
     public int getMaxLevel() {
-        return config.getInt("enchantment_configuration.toxic.max_level");
+        return config.getInt("enchantment_configuration.overclock.max_level");
     }
 
     @Override
     public int getMaxTableLevel() {
-        return config.getInt("enchantment_configuration.toxic.max_level_table");
+        return config.getInt("enchantment_configuration.overclock.max_level_table");
     }
 
     @Override
     public boolean isTreasure() {
-        return config.getBoolean("enchantment_configuration.toxic.is_treasure");
+        return config.getBoolean("enchantment_configuration.overclock.is_treasure");
     }
 
     @Override
     public boolean isBookOnly() {
-        return config.getBoolean("enchantment_configuration.toxic.book_only");
+        return config.getBoolean("enchantment_configuration.overclock.book_only");
     }
 
     @Override
     public boolean isTradingEnabled() {
-        return config.getBoolean("enchantment_configuration.toxic.trade_enabled");
+        return config.getBoolean("enchantment_configuration.overclock.trade_enabled");
     }
 
     @Override
     public int getTradingMinBasePrice() {
-        return config.getInt("enchantment_configuration.toxic.trade_cost_base_lower");
+        return config.getInt("enchantment_configuration.overclock.trade_cost_base_lower");
     }
 
     @Override
     public int getTradingMaxBasePrice() {
-        return config.getInt("enchantment_configuration.toxic.trade_cost_base_upper");
+        return config.getInt("enchantment_configuration.overclock.trade_cost_base_upper");
     }
 
     @Override
     public int getTradingMinLeveledPrice() {
-        return config.getInt("enchantment_configuration.toxic.trade_cost_lv_lower");
+        return config.getInt("enchantment_configuration.overclock.trade_cost_lv_lower");
     }
 
     @Override
     public int getTradingMaxLeveledPrice() {
-        return config.getInt("enchantment_configuration.toxic.trade_cost_base_upper");
+        return config.getInt("enchantment_configuration.overclock.trade_cost_base_upper");
     }
 
     private final ItemStack icon;
@@ -178,7 +170,7 @@ public class Toxic extends CustomEnchant implements TriggerOnAttackEnchantment, 
 
     @Override
     public String getWorldGuardFlagName() {
-        return "es-deny-toxic";
+        return "es-deny-overclock";
     }
 
     @Override

@@ -492,6 +492,8 @@ public class CustomEnchantManager {
         registerEnchant(new Cowardice(63, "cowardice"));
         registerEnchant(new VoidTouch(64, "void_touch"));
         registerEnchant(new PainCycle(65, "pain_cycle"));
+        registerEnchant(new Overclock(66, "overclock"));
+        registerEnchant(new MaceAOE(67, "mace_aoe"));
     }
 
 
