@@ -7,6 +7,7 @@ import me.athlaeos.enchantssquared.enchantments.CustomEnchant;
 import me.athlaeos.enchantssquared.enchantments.LevelService;
 import me.athlaeos.enchantssquared.enchantments.LevelsFromMainHandAndEquipment;
 import me.athlaeos.enchantssquared.enchantments.LevelsFromOffHandAndEquipment;
+import me.athlaeos.enchantssquared.utility.EntityUtils;
 import me.athlaeos.enchantssquared.utility.ItemUtils;
 import me.athlaeos.enchantssquared.utility.Utils;
 import org.bukkit.Location;
@@ -72,7 +73,7 @@ public class Pulling extends CustomEnchant implements TriggerOnAttackEnchantment
         if (shouldEnchantmentCancel(level, realAttacker, victim.getLocation())) return;
 
         double chance = pull_chance_base + ((level - 1) * pull_chance_lv);
-        if (Utils.getRandom().nextDouble() <= chance){
+        if (Utils.getRandom().nextDouble() <= chance * EntityUtils.getLuckFactor(realAttacker)){
             if (victim instanceof Player && proc_sound != null) ((Player) victim).playSound(victim.getLocation(), proc_sound, 1F, 1F);
             if (realAttacker instanceof Player && proc_sound != null) ((Player) realAttacker).playSound(realAttacker.getLocation(), proc_sound, 1F, 1F);
 

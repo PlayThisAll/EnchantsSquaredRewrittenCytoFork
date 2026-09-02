@@ -6,6 +6,7 @@ import me.athlaeos.enchantssquared.enchantments.CustomEnchant;
 import me.athlaeos.enchantssquared.enchantments.LevelService;
 import me.athlaeos.enchantssquared.enchantments.LevelsFromMainHandAndEquipment;
 import me.athlaeos.enchantssquared.enchantments.LevelsFromOffHandAndEquipment;
+import me.athlaeos.enchantssquared.utility.EntityUtils;
 import me.athlaeos.enchantssquared.utility.ItemUtils;
 import me.athlaeos.enchantssquared.utility.Utils;
 import org.bukkit.Material;
@@ -51,7 +52,7 @@ public class Lightning extends CustomEnchant implements TriggerOnAttackEnchantme
         if (shouldEnchantmentCancel(level, realAttacker, victim.getLocation())) return;
 
         double chance = chanceBase + ((level - 1) * chanceLv);
-        if (Utils.getRandom().nextDouble() < chance){
+        if (Utils.getRandom().nextDouble() < chance * EntityUtils.getLuckFactor(realAttacker)){
             victim.getWorld().strikeLightning(victim.getLocation());
         }
     }

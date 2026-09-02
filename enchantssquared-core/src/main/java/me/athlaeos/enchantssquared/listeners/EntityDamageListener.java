@@ -73,9 +73,9 @@ public class EntityDamageListener implements Listener {
                         attackerEquipment.setMainHandEnchantments(CustomEnchantManager.getInstance().getItemsEnchantsFromPDC(((Trident) e.getDamager()).getItem()));
                     } else {
                         MaterialClassType mainType = MaterialClassType.getClass(attacker.getEquipment().getItemInMainHand().getType());
-                        if (!(mainType == MaterialClassType.BOWS || mainType == MaterialClassType.CROSSBOWS)){
+                        if (!(mainType == MaterialClassType.BOWS || mainType == MaterialClassType.CROSSBOWS || mainType == MaterialClassType.SPEARS)){
                             MaterialClassType offType = MaterialClassType.getClass(attacker.getEquipment().getItemInOffHand().getType());
-                            if (offType == MaterialClassType.BOWS || offType == MaterialClassType.CROSSBOWS) mainHand = false;
+                            if (offType == MaterialClassType.BOWS || offType == MaterialClassType.CROSSBOWS || offType == MaterialClassType.SPEARS) mainHand = false;
                         }
                     }
                 }

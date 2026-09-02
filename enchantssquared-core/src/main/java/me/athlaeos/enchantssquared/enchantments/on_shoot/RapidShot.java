@@ -8,6 +8,7 @@ import me.athlaeos.enchantssquared.enchantments.LevelService;
 import me.athlaeos.enchantssquared.enchantments.LevelsFromMainHandAndEquipment;
 import me.athlaeos.enchantssquared.enchantments.LevelsFromOffHandAndEquipment;
 import me.athlaeos.enchantssquared.enchantments.on_attack.TriggerOnAttackEnchantment;
+import me.athlaeos.enchantssquared.utility.EntityUtils;
 import me.athlaeos.enchantssquared.utility.ItemUtils;
 import me.athlaeos.enchantssquared.utility.Utils;
 import org.bukkit.Material;
@@ -107,7 +108,7 @@ public class RapidShot extends CustomEnchant implements TriggerOnProjectileEvent
         if (arrow.hasCustomEffects() || e.getForce() < 0.9) return;
 
         double chance = chance_base + ((level - 1) * chance_lv);
-        if (Utils.getRandom().nextDouble() <= chance){
+        if (Utils.getRandom().nextDouble() <= chance * EntityUtils.getLuckFactor(shooter)){
             double damageMultiplier = damage_multiplier_base + ((level - 1) * damage_multiplier_lv);
             int arrowCount = (count_base + ((level - 1) * count_lv)) - 1;
             // enchantment can only work with at least 2 arrows and we subtract 1 for the original arrow

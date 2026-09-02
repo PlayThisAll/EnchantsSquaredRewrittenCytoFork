@@ -3,6 +3,7 @@ package me.athlaeos.enchantssquared.enchantments.on_attacked;
 import me.athlaeos.enchantssquared.config.ConfigManager;
 import me.athlaeos.enchantssquared.domain.MaterialClassType;
 import me.athlaeos.enchantssquared.enchantments.*;
+import me.athlaeos.enchantssquared.utility.EntityUtils;
 import me.athlaeos.enchantssquared.utility.ItemUtils;
 import me.athlaeos.enchantssquared.utility.Utils;
 import org.bukkit.Material;
@@ -47,7 +48,7 @@ public class Shielding extends CustomEnchant implements TriggerOnAttackedEnchant
         if (!(e.getDamager() instanceof Projectile) || shouldEnchantmentCancel(level, victim, victim.getLocation())) return;
 
         double chance = chanceBase + ((level - 1) * chanceLevel);
-        if (Utils.getRandom().nextDouble() < chance){
+        if (Utils.getRandom().nextDouble() < chance * EntityUtils.getLuckFactor(victim)){
             e.setCancelled(true);
         }
     }

@@ -8,6 +8,7 @@ import me.athlaeos.enchantssquared.enchantments.LevelService;
 import me.athlaeos.enchantssquared.enchantments.LevelsFromMainHandAndEquipment;
 import me.athlaeos.enchantssquared.enchantments.LevelsFromOffHandAndEquipment;
 import me.athlaeos.enchantssquared.managers.AnimationRegistry;
+import me.athlaeos.enchantssquared.utility.EntityUtils;
 import me.athlaeos.enchantssquared.utility.ItemUtils;
 import me.athlaeos.enchantssquared.utility.Utils;
 import org.bukkit.Material;
@@ -67,7 +68,7 @@ public class ShieldDowner extends CustomEnchant implements TriggerOnAttackEnchan
         if (!p.isBlocking() || p.getCooldown(Material.SHIELD) > 0) return;
 
         double chance = chanceBase + ((level - 1) * chanceLv);
-        if (Utils.getRandom().nextDouble() < chance){
+        if (Utils.getRandom().nextDouble() < chance * EntityUtils.getLuckFactor(realAttacker)){
             int duration = durationBase + ((level - 1) * durationLv);
 
             p.setCooldown(Material.SHIELD, duration);

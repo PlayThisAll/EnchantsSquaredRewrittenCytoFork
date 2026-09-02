@@ -3,6 +3,11 @@ package me.athlaeos.enchantssquared.domain;
 import me.athlaeos.enchantssquared.EnchantsSquared;
 
 public enum MinecraftVersion {
+    MINECRAFT_26_3_4(17.4F, "26_3_4", "26.3.4", "v1_21_R3"),
+    MINECRAFT_26_3_3(17.3F, "26_3_3", "26.3.3", "v1_21_R3"),
+    MINECRAFT_26_3_2(17.2F, "26_3_2", "26.3.2", "v1_21_R3"),
+    MINECRAFT_26_3_1(17.1F, "26_3_1", "26.3.1", "v1_21_R3"),
+    MINECRAFT_26_3(17.0F, "26_3", "26.3", "v1_21_R3"),
     MINECRAFT_26_2_12(16.93F, "26_2_12", "26.2.12", "v1_21_R3"),
     MINECRAFT_26_2_11(16.92F, "26_2_11", "26.2.11", "v1_21_R3"),
     MINECRAFT_26_2_10(16.91F, "26_2_10", "26.2.10", "v1_21_R3"),

@@ -82,6 +82,8 @@ cache_cleanup_delay: 600000 # Time is in milliseconds, default 10 minutes
 
 allow_grindstone_removal: true # If false, grindstones no longer remove custom enchantments
 
+
+luck_factor: 0.25 #changes the efficacy of luck, with 0.1, luck +3 would give +0.3 additional chance multi
 # You may add the following properties to enchantments in case you want them to conflict with other enchantments
 # incompatible_vanilla_enchantments
 # incompatible_custom_enchantments
@@ -898,7 +900,7 @@ enchantment_configuration:
       - CROSSBOWS
 
   stunning:
-    description: '&8> Has a &e2&8-&e4%&8 chance to inflict the entity you''re damaging with a stun. Axes are twice as potent'
+    description: '&8> Has a &e2&8-&e4%&8 chance to inflict the entity you''re damaging with a stun.'
     # A stun is a combination of 5 very strong debuffs, mining fatigue, slowness, weakness, blindness, and jump boost (to cancel jumping)
     enchant_name: '&7Blunt %lv_roman%'
     enabled: true
@@ -910,7 +912,7 @@ enchantment_configuration:
     apply_chance_lv: 0.02 # The additional chance per level the damaged target is inflicted with a stun
     duration: 20 # Base duration of the debuff (20 = 1 second)
     duration_lv: 20 # Additional duration of the debuff per level
-    buffed_axe_potency: 2.0 # (pick)axes multiply the chance to stun targets by the given amount over swords or (cross)bows
+    buffed_axe_potency: 1.0 # (pick)axes multiply the chance to stun targets by the given amount over swords or (cross)bows
     animation: flash-1
     sound: ENCHANT_THORNS_HIT
     trade_enabled: true

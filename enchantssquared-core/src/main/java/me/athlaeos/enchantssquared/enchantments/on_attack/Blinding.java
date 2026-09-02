@@ -64,7 +64,7 @@ public class Blinding extends CustomEnchant implements TriggerOnAttackEnchantmen
         if (shouldEnchantmentCancel(level, realAttacker, victim.getLocation())) return;
 
         double chance = chanceBase + ((level - 1) * chanceLv);
-        if (Utils.getRandom().nextDouble() < chance){
+        if (Utils.getRandom().nextDouble() < chance * EntityUtils.getLuckFactor(realAttacker)){
             int duration = durationBase + ((level - 1) * durationLv);
 
             EntityUtils.applyPotionEffectIfStronger(victim,

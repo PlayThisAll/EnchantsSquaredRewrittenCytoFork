@@ -82,10 +82,10 @@ public class Stunning extends CustomEnchant implements TriggerOnAttackEnchantmen
         }
 
         double chance = chanceBase + ((level - 1) * chanceLv);
-        if (!ItemUtils.isAirOrNull(item) && item.getType().toString().contains("_AXE")) {
-            chance *= axeStunMultiplier;
-        }
-        if (Utils.getRandom().nextDouble() < chance){
+        //if (!ItemUtils.isAirOrNull(item) && item.getType().toString().contains("_AXE")) {
+        //    chance *= axeStunMultiplier;
+        //}
+        if (Utils.getRandom().nextDouble() < chance * EntityUtils.getLuckFactor(realAttacker)){
             int duration = durationBase + ((level - 1) * durationLv);
 
             if(victim instanceof Player playerVictim) {

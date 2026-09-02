@@ -5,6 +5,7 @@ import me.athlaeos.enchantssquared.config.ConfigManager;
 import me.athlaeos.enchantssquared.domain.MaterialClassType;
 import me.athlaeos.enchantssquared.enchantments.*;
 import me.athlaeos.enchantssquared.managers.CustomEnchantManager;
+import me.athlaeos.enchantssquared.utility.EntityUtils;
 import me.athlaeos.enchantssquared.utility.ItemSerializer;
 import me.athlaeos.enchantssquared.utility.ItemUtils;
 import me.athlaeos.enchantssquared.utility.Utils;
@@ -183,7 +184,7 @@ public class Soulbound extends CustomEnchant implements TriggerOnDeathEnchantmen
             int soulboundLevel = CustomEnchantManager.getInstance().getEnchantStrength(i, getType());
             if (soulboundLevel <= 0) continue;
             double preservationChance = chanceBase + ((level - 1) * chanceLv);
-            if (Utils.getRandom().nextDouble() <= preservationChance){
+            if (Utils.getRandom().nextDouble() <= preservationChance * EntityUtils.getLuckFactor(e.getEntity())){
                 // preserve item
                 if (e.getDrops().contains(i)){
                     e.getDrops().remove(i);
