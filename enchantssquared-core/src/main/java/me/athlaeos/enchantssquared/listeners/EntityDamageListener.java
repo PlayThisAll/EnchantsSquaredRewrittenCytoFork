@@ -58,6 +58,9 @@ public class EntityDamageListener implements Listener {
                 for (CustomEnchant enchantment : CustomEnchantManager.getInstance().getEnchantmentsMatchingFilter(c -> c instanceof TriggerOnAttackedEnchantment)){
                     ((TriggerOnAttackedEnchantment) enchantment).onAttacked(e, enchantment.getLevelService(offHand, victim).getLevel(victimEquipment), attacker);
                 }
+                for (CustomStatus status : CustomStatusManager.getInstance().getStatusesMatchingFilter(c -> c instanceof TriggerOnAttackedStatus)) {
+                    ((TriggerOnAttackedStatus) status).onAttacked(e, attacker);
+                };
             }
             if (e.isCancelled()) return; // if the defensive enchantment for whatever reason cancelled the attack, the attack enchantments will not proceed.
 
