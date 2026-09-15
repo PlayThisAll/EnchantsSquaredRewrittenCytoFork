@@ -1,3 +1,7 @@
+package me.athlaeos.enchantssquared.managers;
+
+import me.athlaeos.enchantssquared.statuses.on_attacked.*;
+
 public class CustomStatusManager {
     private static CustomStatusManager manager;
     private final BiMap<Integer, CustomStatus> allStatuses;
