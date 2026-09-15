@@ -23,7 +23,8 @@ public class CommandManager implements TabExecutor {
 		warning_no_permission = ConfigManager.getInstance().getConfig("translations.yml").get().getString("warning_no_permission");
 
 		commands.put("help", new HelpCommand());
-		// commands.put("reload", new ReloadCommand());
+		//this thing's fucked, either enchants stop working, or they start working too op... will have to have proper work on this shit
+		//commands.put("reload", new ReloadCommand());
 		commands.put("enchant", new EnchantCommand());
 		commands.put("remove", new RemoveEnchantCommand());
 		commands.put("list", new GetEnchantListCommand());
@@ -51,8 +52,8 @@ public class CommandManager implements TabExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, org.bukkit.command.Command cmd, String name, String[] args) {
 		if (args.length == 0) {
-			sender.sendMessage(ChatUtils.chat(String.format("&dEnchants Squared v%s by Athlaeos", EnchantsSquared.getPlugin().getDescription().getVersion())));
-			sender.sendMessage(ChatUtils.chat("&7/es help"));
+			sender.sendMessage(ChatUtils.chat(String.format("&dEnchants Cubed v%s by Prototer (fork from Enchants Squared by athlaeos)", EnchantsSquared.getPlugin().getDescription().getVersion())));
+			sender.sendMessage(ChatUtils.chat("&7/ec help"));
 			return true;
 		}
 		

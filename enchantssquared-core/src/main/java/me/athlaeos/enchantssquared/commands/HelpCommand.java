@@ -88,16 +88,16 @@ public class HelpCommand implements Command {
 
 	@Override
 	public String getFailureMessage() {
-		return "&4/es help";
+		return "&4/ec help";
 	}
 
 	@Override
 	public String[] getHelpEntry() {
 		return new String[]{
 				ChatUtils.chat("&8&m                                             "),
-				ChatUtils.chat("&d/es help <page>"),
+				ChatUtils.chat("&d/ec help <page>"),
 				ChatUtils.chat("&7" + help_description),
-				ChatUtils.chat("&7> &des.help")
+				//ChatUtils.chat("&7> &des.help")
 		};
 	}
 

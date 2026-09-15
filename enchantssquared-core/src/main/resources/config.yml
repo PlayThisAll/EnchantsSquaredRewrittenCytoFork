@@ -82,6 +82,8 @@ cache_cleanup_delay: 600000 # Time is in milliseconds, default 10 minutes
 
 allow_grindstone_removal: true # If false, grindstones no longer remove custom enchantments
 
+
+luck_factor: 0.25 #changes the efficacy of luck, with 0.1, luck +3 would give +0.3 additional chance multi
 # You may add the following properties to enchantments in case you want them to conflict with other enchantments
 # incompatible_vanilla_enchantments
 # incompatible_custom_enchantments
@@ -898,7 +900,7 @@ enchantment_configuration:
       - CROSSBOWS
 
   stunning:
-    description: '&8> Has a &e2&8-&e4%&8 chance to inflict the entity you''re damaging with a stun. Axes are twice as potent'
+    description: '&8> Has a &e2&8-&e4%&8 chance to inflict the entity you''re damaging with a stun.'
     # A stun is a combination of 5 very strong debuffs, mining fatigue, slowness, weakness, blindness, and jump boost (to cancel jumping)
     enchant_name: '&7Blunt %lv_roman%'
     enabled: true
@@ -910,7 +912,7 @@ enchantment_configuration:
     apply_chance_lv: 0.02 # The additional chance per level the damaged target is inflicted with a stun
     duration: 20 # Base duration of the debuff (20 = 1 second)
     duration_lv: 20 # Additional duration of the debuff per level
-    buffed_axe_potency: 2.0 # (pick)axes multiply the chance to stun targets by the given amount over swords or (cross)bows
+    buffed_axe_potency: 1.0 # (pick)axes multiply the chance to stun targets by the given amount over swords or (cross)bows
     animation: flash-1
     sound: ENCHANT_THORNS_HIT
     trade_enabled: true
@@ -1064,6 +1066,7 @@ enchantment_configuration:
       - AXES
       - BOWS
       - CROSSBOWS
+      - TRIDENTS
 
   ground_stomping:
     description: '&8> Immunity to fall damage. Landing after great falls deals damage in a radius. Damage and radius increase with distance, scaling &e60&8-&e100% &8faster. While sneaking, you fall &e2.5x &8faster. Effect has a &e20&8-&e10 second &8cooldown'
@@ -1144,6 +1147,8 @@ enchantment_configuration:
       - CROSSBOWS
       - BOWS
       - SWORDS
+      - SPEARS
+      - TRIDENTS
 
   crushing:
     description: '&8> For each piece of heavy armor the enemy is wearing(gold, iron, netherite), you deal &e2.5&8-&e3.75&8-&e5%&8 more damage'
@@ -1390,7 +1395,7 @@ enchantment_configuration:
   damage_reduction:
     description: '&8> Grants the wearer &e10&8-&e15&8-&e20%&8 damage reduction while wearing'
     enchant_name: '&7Dragonhide %lv_roman%'
-    enabled: false
+    enabled: true
     weight: 1
     book_only: false
     max_level: 3
@@ -1402,7 +1407,7 @@ enchantment_configuration:
     trade_cost_base_upper: 32
     trade_cost_lv_lower: 16
     trade_cost_lv_upper: 32
-    icon: SUGAR
+    icon: DRAGON_HEAD
     is_treasure: true
     compatible_with:
       - CHESTPLATES
@@ -1498,12 +1503,175 @@ enchantment_configuration:
     compatible_with: # Not limited to ranged weapons
       - ALL
 
+  piercer:
+    description: '&8> &e50%&8 of base weapon damage pierces any damage reduction. &4INCOMPATIBLE WITH ANY OTHER ENCHANT'
+    enchant_name: '&cPiercer EX'
+    enabled: true
+    weight: 1
+    book_only: false
+    sword_damage_pierce: 0.5 # sword dmg mutliplier of damage that ignores any damage resistance
+    potion_damage_pierce: 0 # potion bonus dmg mutliplier of damage that ignores any damage resistance
+    allow_critical_hits: true # Use crits in damage calculations
+    trade_enabled: false
+    trade_cost_base_lower: 16
+    trade_cost_base_upper: 24
+    trade_cost_lv_lower: 8
+    trade_cost_lv_upper: 12
+    icon: NETHERITE_SWORD
+    is_treasure: false
+    compatible_with:
+      - SWORDS
+    # enchant incompatibility set in code
+
+  speed_master:
+    description: '&8> Grants the wielder and their mount &e10&8-&e15&8-&e20%&8 increased movement speed'
+    enchant_name: '&7Speed Master %lv_roman%'
+    enabled: true
+    weight: 40
+    book_only: false
+    max_level: 3
+    max_level_table: 3
+    speed_base: 0.1 # Base % movement speed buff at level 1
+    speed_lv: 0.05 # % movement speed buff per level above 1
+    trade_enabled: true
+    trade_cost_base_lower: 16
+    trade_cost_base_upper: 32
+    trade_cost_lv_lower: 16
+    trade_cost_lv_upper: 32
+    icon: SUGAR
+    is_treasure: false
+    compatible_with:
+      - SPEARS
+
+  cowardice:
+    description: '&8>You deal &e20&8-&e30&8-&e40%&8 more damage while at full health.'
+    enchant_name: '&7Cowardice %lv_roman%'
+    enabled: true
+    weight: 15
+    book_only: false
+    max_level: 3
+    max_level_table: 3
+    damage_base: 0.2
+    damage_lv: 0.1
+    ranged_damage_penalty: 0 #Perfectionist has the option, adding for parity and potential tweaking
+    grace_hp_amount: 0.5 #due to rounding, sometimes it may seem like hp is full. or computers can't math
+    trade_enabled: true
+    trade_cost_base_lower: 16
+    trade_cost_base_upper: 32
+    trade_cost_lv_lower: 16
+    trade_cost_lv_upper: 32
+    icon: ARMOR_STAND
+    is_treasure: true
+    compatible_with:
+      - BOOTS
+
+  void_touch:
+    description: '&8>Applies "Void Touched" status effect that, over &e3&8-&e4&8-&e5&8 seconds, increases damage up to &e30&8-&e40&8-&e50%&8 for the user'
+    enchant_name: '&7Void Strike %lv_roman%'
+    enabled: true
+    weight: 15
+    book_only: false
+    max_level: 3
+    max_level_table: 3
+    damage_base: 0.3
+    damage_lv: 0.1
+    time_base: 60 #time in ticks
+    time_lv: 20
+    ranged_damage_penalty: 0 #Perfectionist has the option, adding for parity and potential tweaking
+    trade_enabled: true
+    trade_cost_base_lower: 16
+    trade_cost_base_upper: 32
+    trade_cost_lv_lower: 16
+    trade_cost_lv_upper: 32
+    icon: CRYING_OBSIDIAN
+    is_treasure: true
+    compatible_with:
+      - SWORDS
+      - AXES
+      - BOWS
+      - CROSSBOWS
+      - TRIDENTS
+      - MACES
+      - SPEARS
+
+  pain_cycle:
+    description: '&8>Consumes &e5&8-&e10%&8 of your hp on each hit, after &e5&8 hits your next one will increase base damage based on health consumed with half efficiency'
+    enchant_name: '&7Pain Cycle %lv_roman%'
+    enabled: true
+    weight: 15
+    book_only: false
+    max_level: 3
+    max_level_table: 3
+    hp_drain_base: 0.05 #% of hp drained, 1 being 100%
+    hp_drain_lv: 0.05
+    damage_efficiency: 0.5
+    safe_threshold: 0 #% of health that can't go under when using the enchant.
+    trade_enabled: true
+    trade_cost_base_lower: 16
+    trade_cost_base_upper: 32
+    trade_cost_lv_lower: 16
+    trade_cost_lv_upper: 32
+    icon: MELON_SLICE
+    is_treasure: true
+    compatible_with:
+      - SWORDS
+      - AXES
+      - TRIDENTS
+
+  overclock:
+    description: '&8>deals &e50&8-&e100%&8 more damage on hit, but mace goes on a &e40&8-&e60&8 second cooldown afterwards'
+    enchant_name: '&7Overclock %lv_roman%'
+    enabled: false
+    weight: 10
+    book_only: false
+    max_level: 2
+    max_level_table: 2
+    damage_base: 0.5
+    damage_lv: 0.5
+    cooldown_base: 800 #in ticks
+    cooldown_lv: 400
+    trade_enabled: true
+    trade_cost_base_lower: 16
+    trade_cost_base_upper: 32
+    trade_cost_lv_lower: 16
+    trade_cost_lv_upper: 32
+    icon: CLOCK
+    is_treasure: true
+    compatible_with:
+      - MACES
+
+  mace_aoe:
+    description: '&8>deals &e20&8-&e40&8-&e60%&8 of damage to entities in a 1.5 block radius'
+    enchant_name: '&7Impact Zone %lv_roman%'
+    enabled: false
+    weight: 10
+    book_only: false
+    max_level: 2
+    max_level_table: 2
+    damage_base: 0.2
+    damage_lv: 0.2
+    effect_radius: 1.5 #in blocks
+    trade_enabled: true
+    trade_cost_base_lower: 16
+    trade_cost_base_upper: 32
+    trade_cost_lv_lower: 16
+    trade_cost_lv_upper: 32
+    icon: FIRE_CHARGE
+    is_treasure: true
+    compatible_with:
+      - MACES
+    incompatible_vanilla_enchantments:
+      - density
+      - breach
+
 # All usable compatible_with values, editing these values does not change anything
 compatible_with_values:
   - SWORDS
   - BOWS
   - CROSSBOWS
   - TRIDENTS
+  - MACES
+  - SPEARS
   - HELMETS
   - CHESTPLATES
   - LEGGINGS

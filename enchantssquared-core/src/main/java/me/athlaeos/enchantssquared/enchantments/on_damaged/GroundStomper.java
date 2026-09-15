@@ -232,13 +232,13 @@ public class GroundStomper extends CustomEnchant implements TriggerOnDamagedEnch
     @EventHandler
     public void onSneak(PlayerToggleSneakEvent e){
         if (e.isCancelled() || !MinecraftVersion.currentVersionNewerThan(MinecraftVersion.MINECRAFT_1_20_5)) return;
-        if (!e.isSneaking()) EntityUtils.removeUniqueAttribute(e.getPlayer(), "gravity_groundstompers", Attribute.GENERIC_GRAVITY);
+        if (!e.isSneaking()) EntityUtils.removeUniqueAttribute(e.getPlayer(), "gravity_groundstompers", Attribute.GRAVITY);
         else {
             if (e.getPlayer().getFallDistance() <= 0) return;
             EntityEquipment equipment = EntityEquipmentCacheManager.getInstance().getAndCacheEquipment(e.getPlayer());
             int groundStompersLevel = getLevelService(false, e.getPlayer()).getLevel(equipment);
             if (groundStompersLevel <= 0) return;
-            EntityUtils.addUniqueAttribute(e.getPlayer(), GROUNDSTOMPERS_GRAVITY, "gravity_groundstompers", Attribute.GENERIC_GRAVITY, gravityMultiplier, AttributeModifier.Operation.ADD_SCALAR);
+            EntityUtils.addUniqueAttribute(e.getPlayer(), GROUNDSTOMPERS_GRAVITY, "gravity_groundstompers", Attribute.GRAVITY, gravityMultiplier, AttributeModifier.Operation.ADD_SCALAR);
         }
     }
 }

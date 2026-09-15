@@ -179,13 +179,13 @@ public class Steady extends CustomEnchant implements TriggerOnRegularIntervalsEn
     public void execute(Entity e, int level) {
         if (!(e instanceof LivingEntity)) return;
         if (shouldEnchantmentCancel(level, (LivingEntity) e, e.getLocation())) {
-            EntityUtils.removeUniqueAttribute((LivingEntity) e, "es_steady", Attribute.GENERIC_KNOCKBACK_RESISTANCE);
+            EntityUtils.removeUniqueAttribute((LivingEntity) e, "es_steady", Attribute.KNOCKBACK_RESISTANCE);
             return;
         }
 
         double resistance = resistanceBase + ((level - 1) * resistanceLv);
 
-        EntityUtils.addUniqueAttribute((LivingEntity) e, STEADY_UUID, "es_steady", Attribute.GENERIC_KNOCKBACK_RESISTANCE, resistance, AttributeModifier.Operation.ADD_NUMBER);
+        EntityUtils.addUniqueAttribute((LivingEntity) e, STEADY_UUID, "es_steady", Attribute.KNOCKBACK_RESISTANCE, resistance, AttributeModifier.Operation.ADD_NUMBER);
 
         if (cleanup && e instanceof Player) stripEnchantmentAttributesFromAllEquipment((Player) e);
     }
@@ -194,7 +194,7 @@ public class Steady extends CustomEnchant implements TriggerOnRegularIntervalsEn
 
     @Override
     public void cleanAttribute(LivingEntity e) {
-        EntityUtils.removeUniqueAttribute(e, "es_steady", Attribute.GENERIC_KNOCKBACK_RESISTANCE);
+        EntityUtils.removeUniqueAttribute(e, "es_steady", Attribute.KNOCKBACK_RESISTANCE);
     }
 
     private void stripEnchantmentAttributesFromAllEquipment(Player p){
@@ -211,8 +211,8 @@ public class Steady extends CustomEnchant implements TriggerOnRegularIntervalsEn
         if (ItemUtils.isAirOrNull(i)) return;
         ItemMeta meta = i.getItemMeta();
         if (meta == null) return;
-        if (meta.getAttributeModifiers(Attribute.GENERIC_KNOCKBACK_RESISTANCE) == null) return;
-        meta.removeAttributeModifier(Attribute.GENERIC_KNOCKBACK_RESISTANCE);
+        if (meta.getAttributeModifiers(Attribute.KNOCKBACK_RESISTANCE) == null) return;
+        meta.removeAttributeModifier(Attribute.KNOCKBACK_RESISTANCE);
         i.setItemMeta(meta);
     }
 }

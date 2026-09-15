@@ -220,7 +220,7 @@ public class Vampiric extends CustomEnchant implements TriggerOnDeathEnchantment
     }
 
     private void healEntity(LivingEntity e, double amount){
-        AttributeInstance attribute = e.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+        AttributeInstance attribute = e.getAttribute(Attribute.MAX_HEALTH);
         if (attribute != null){
             double maxHealth = attribute.getValue();
             double currentHealth = e.getHealth();

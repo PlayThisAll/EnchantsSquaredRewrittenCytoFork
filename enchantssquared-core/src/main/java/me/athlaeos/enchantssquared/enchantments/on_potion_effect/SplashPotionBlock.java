@@ -156,7 +156,7 @@ public class SplashPotionBlock extends CustomEnchant implements TriggerOnPotionE
         if (shouldEnchantmentCancel(level, (LivingEntity) e.getEntity(), e.getEntity().getLocation())) return;
 
         if (e.getCause() == EntityPotionEffectEvent.Cause.AREA_EFFECT_CLOUD || e.getCause() == EntityPotionEffectEvent.Cause.POTION_SPLASH){
-            if (((Player) e.getEntity()).isBlocking()){
+            if (((Player) e.getEntity()).getActiveItem().getType() == Material.SHIELD){
                 e.setCancelled(true);
             }
         }

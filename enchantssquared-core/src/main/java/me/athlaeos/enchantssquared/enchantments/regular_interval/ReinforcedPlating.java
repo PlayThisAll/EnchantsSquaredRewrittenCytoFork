@@ -180,13 +180,13 @@ public class ReinforcedPlating extends CustomEnchant implements TriggerOnRegular
     public void execute(Entity e, int level) {
         if (!(e instanceof LivingEntity)) return;
         if (shouldEnchantmentCancel(level, (LivingEntity) e, e.getLocation())) {
-            EntityUtils.removeUniqueAttribute((LivingEntity) e, "es_reinforced_plating", Attribute.GENERIC_ARMOR);
+            EntityUtils.removeUniqueAttribute((LivingEntity) e, "es_reinforced_plating", Attribute.ARMOR);
             return;
         }
 
         double armorBoost = armorBase + ((level - 1) * armorLv);
 
-        EntityUtils.addUniqueAttribute((LivingEntity) e, PLATING_UUID, "es_reinforced_plating", Attribute.GENERIC_ARMOR, armorBoost,
+        EntityUtils.addUniqueAttribute((LivingEntity) e, PLATING_UUID, "es_reinforced_plating", Attribute.ARMOR, armorBoost,
                 AttributeModifier.Operation.ADD_NUMBER);
 
         if (cleanup && e instanceof Player) stripEnchantmentAttributesFromAllEquipment((Player) e);
@@ -196,7 +196,7 @@ public class ReinforcedPlating extends CustomEnchant implements TriggerOnRegular
 
     @Override
     public void cleanAttribute(LivingEntity e) {
-        EntityUtils.removeUniqueAttribute(e, "es_reinforced_plating", Attribute.GENERIC_ARMOR);
+        EntityUtils.removeUniqueAttribute(e, "es_reinforced_plating", Attribute.ARMOR);
     }
 
     private void stripEnchantmentAttributesFromAllEquipment(Player p){
@@ -213,8 +213,8 @@ public class ReinforcedPlating extends CustomEnchant implements TriggerOnRegular
         if (ItemUtils.isAirOrNull(i)) return;
         ItemMeta meta = i.getItemMeta();
         if (meta == null) return;
-        if (meta.getAttributeModifiers(Attribute.GENERIC_ARMOR) == null) return;
-        meta.removeAttributeModifier(Attribute.GENERIC_ARMOR);
+        if (meta.getAttributeModifiers(Attribute.ARMOR) == null) return;
+        meta.removeAttributeModifier(Attribute.ARMOR);
         i.setItemMeta(meta);
     }
 }

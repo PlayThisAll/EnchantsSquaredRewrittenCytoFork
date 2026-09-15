@@ -14,6 +14,7 @@ public enum Version {
     MINECRAFT_1_21(9),
     MINECRAFT_1_22(10),
     MINECRAFT_1_23(11),
+    MINECRAFT_26_2(16),
     INCOMPATIBLE(-1);
 
     private final int version;
@@ -50,6 +51,7 @@ public enum Version {
         else if (stringVersion.contains("1_21") || stringVersion.contains("1.21")) return Version.MINECRAFT_1_21;
         else if (stringVersion.contains("1_22") || stringVersion.contains("1.22")) return Version.MINECRAFT_1_22;
         else if (stringVersion.contains("1_23") || stringVersion.contains("1.23")) return Version.MINECRAFT_1_23;
+        else if (stringVersion.contains("26_2") || stringVersion.contains("26.2")) return Version.MINECRAFT_26_2;
         else return Version.INCOMPATIBLE;
     }
 }

@@ -211,7 +211,7 @@ public class Shockwave extends CustomEnchant implements TriggerOnInteractEnchant
         for (Entity entity : entitiesInRadius){
             if (entity instanceof LivingEntity && !EntityClassificationType.isMatchingClassification(entity.getType(), EntityClassificationType.UNALIVE)){
                 ((LivingEntity) entity).damage(0.01, e.getPlayer());
-                AttributeInstance attribute = ((LivingEntity) entity).getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE);
+                AttributeInstance attribute = ((LivingEntity) entity).getAttribute(Attribute.KNOCKBACK_RESISTANCE);
                 double forceWithResistance = force;
                 if (attribute != null) forceWithResistance *= Math.max(0, 1 - attribute.getValue());
 

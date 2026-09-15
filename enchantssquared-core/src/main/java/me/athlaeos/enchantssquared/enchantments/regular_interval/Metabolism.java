@@ -5,6 +5,7 @@ import me.athlaeos.enchantssquared.domain.MaterialClassType;
 import me.athlaeos.enchantssquared.enchantments.CustomEnchant;
 import me.athlaeos.enchantssquared.enchantments.LevelService;
 import me.athlaeos.enchantssquared.enchantments.LevelsFromAllEquipment;
+import me.athlaeos.enchantssquared.utility.EntityUtils;
 import me.athlaeos.enchantssquared.utility.ItemUtils;
 import me.athlaeos.enchantssquared.utility.Utils;
 import org.bukkit.Material;
@@ -170,9 +171,7 @@ public class Metabolism extends CustomEnchant implements TriggerOnRegularInterva
         if (shouldEnchantmentCancel(level, (LivingEntity) e, e.getLocation())) return;
         Player p = (Player) e;
         if (p.getFoodLevel() >= 20 && p.getSaturation() >= saturationLimit) return;
-
-        int hungerRegenerated = Utils.excessChance(hungerPerSecondBase + (level - 1) * hungerPerSecondLv);
-
+        int hungerRegenerated = Utils.excessChance((hungerPerSecondBase + (level - 1) * hungerPerSecondLv) * EntityUtils.getLuckFactor(p));
         if (p.getFoodLevel() >= 20){
             if (p.getSaturation() < saturationLimit && p.getSaturation() + hungerRegenerated <= 20F){
                 p.setSaturation(p.getSaturation() + hungerRegenerated);

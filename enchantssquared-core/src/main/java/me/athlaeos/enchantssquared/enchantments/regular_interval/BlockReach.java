@@ -169,19 +169,19 @@ public class BlockReach extends CustomEnchant implements TriggerOnRegularInterva
     public void execute(Entity e, int level) {
         if (!(e instanceof LivingEntity)) return;
         if (shouldEnchantmentCancel(level, (LivingEntity) e, e.getLocation())) {
-            EntityUtils.removeUniqueAttribute((LivingEntity) e, "es_block_reach", Attribute.PLAYER_BLOCK_INTERACTION_RANGE);
+            EntityUtils.removeUniqueAttribute((LivingEntity) e, "es_block_reach", Attribute.BLOCK_INTERACTION_RANGE);
             return;
         }
 
         double stepHeightBoost = blockReachBase + ((level - 1) * blockReachLv);
 
-        EntityUtils.addUniqueAttribute((LivingEntity) e, STEP_HEIGHT_UUID, "es_block_reach", Attribute.PLAYER_BLOCK_INTERACTION_RANGE, stepHeightBoost, AttributeModifier.Operation.ADD_NUMBER);
+        EntityUtils.addUniqueAttribute((LivingEntity) e, STEP_HEIGHT_UUID, "es_block_reach", Attribute.BLOCK_INTERACTION_RANGE, stepHeightBoost, AttributeModifier.Operation.ADD_NUMBER);
     }
 
     public static final UUID STEP_HEIGHT_UUID = UUID.fromString("c93dd786-f471-4930-8bf1-401dcc224514");
 
     @Override
     public void cleanAttribute(LivingEntity e) {
-        EntityUtils.removeUniqueAttribute(e, "es_block_reach", Attribute.PLAYER_BLOCK_INTERACTION_RANGE);
+        EntityUtils.removeUniqueAttribute(e, "es_block_reach", Attribute.BLOCK_INTERACTION_RANGE);
     }
 }

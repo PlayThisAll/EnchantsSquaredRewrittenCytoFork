@@ -58,16 +58,16 @@ public class RemoveEnchantCommand implements Command {
 
     @Override
     public String getFailureMessage() {
-        return "&c/es remove <enchantmen>";
+        return "&c/ec remove <enchantmen>";
     }
 
     @Override
     public String[] getHelpEntry() {
         return new String[]{
                 ChatUtils.chat("&8&m                                             "),
-                ChatUtils.chat("&d/es remove <enchantment>"),
+                ChatUtils.chat("&d/ec remove <enchantment>"),
                 ChatUtils.chat("&7" + remove_enchant_description),
-                ChatUtils.chat("&7> &des.removeenchant")
+                //ChatUtils.chat("&7> &des.removeenchant")
         };
     }
 

@@ -40,6 +40,8 @@ equipment_translations:
   BOWS: "Bows"
   CROSSBOWS: "Crossbows"
   TRIDENTS: "Tridents"
+  MACES: "Maces"
+  SPEARS: "Spears"
   HELMETS: "Helmets"
   CHESTPLATES: "Chestplates"
   LEGGINGS: "Leggings"
@@ -82,6 +84,17 @@ enchant_warning: "&cUsing very high enchant levels may cause extreme lag or be u
 # Description message within the "/es help" command of the enchant command
 enchant_description: "Used to enchant any item with any custom enchant"
 
+#salvage was unsuccesful
+salvage_fail: "&cYou were unable to extract specialized knowledge from this item."
+#salvage was succesful, but items were downgraded
+salvage_partial: "&cYou were only able to extract some of the specialized knowledge from this item."
+#repair was unsuccseful
+repair_fail: "&cAdvanced arcane power has completely left the item."
+#repair was succesful, but items were downgraded
+repair_partial: "Advanced arcane power has decreased for the item."
+#repair was succesful
+repair_success: "&aYou have sustained the advanced arcane energies within the item."
+
 # Description message within the "/es help" command of the help command
 help_description: "Shows a summary of all commands for EnchantsSquared"
 
@@ -123,3 +136,7 @@ menu_description: "Shows a list of all enabled enchants in a handy GUI"
 # Error message when the the command sender enters a player name of a player that isn"t online
 error_player_not_found: "&cPlayer not found"
 error_invalid_targeter: "&cMalformed target selector"
+
+
+# Enchant communications
+blood_strike_ready: "&4 [Pain Cycle]Next attack will be powered up"

@@ -31,6 +31,7 @@ public final class EnchantsSquared extends JavaPlugin {
     private static boolean trinketsHooked = false;
     private static boolean valhallaHooked = false;
     private static boolean worldGuardHooked = false;
+    private static boolean mcMMOHooked = false;
     private static boolean jobsHooked = false;
     private static NMS nms = null;
 
@@ -52,6 +53,10 @@ public final class EnchantsSquared extends JavaPlugin {
     private ProjectileListener projectileListener = null;
     private MenuListener menuListener = null;
     private ItemDamageListener itemDamageListener = null;
+    private McmmoSalvageListener mcmmoSalvageListener = null;
+    private McmmoArcaneFishingListener mcmmoArcaneFishingListener = null;
+    private McmmoRepairListener mcmmoRepairListener = null;
+    private PrePlayerAttackEntityEventListener prePlayerAttackEntityEventListener = null;
 
     @Override
     public void onLoad() {
@@ -60,6 +65,7 @@ public final class EnchantsSquared extends JavaPlugin {
 
         saveConfig("config.yml");
 
+        mcMMOHooked = hasPlugin("mcMMO");
         valhallaHooked = hasPlugin("ValhallaMMO");
         if (valhallaHooked){
             this.getLogger().info("ValhallaMMO hooked! Adding a bunch of cool stuff.");
@@ -113,6 +119,12 @@ public final class EnchantsSquared extends JavaPlugin {
         menuListener = registerListener(new MenuListener());
         itemDamageListener = registerListener(new ItemDamageListener());
         projectileListener = registerListener(new ProjectileListener());
+        prePlayerAttackEntityEventListener = registerListener(new PrePlayerAttackEntityEventListener());
+        if(isMcMMOHooked()){
+            mcmmoSalvageListener = registerListener(new McmmoSalvageListener());
+            mcmmoArcaneFishingListener = registerListener(new McmmoArcaneFishingListener());
+            mcmmoRepairListener = registerListener(new McmmoRepairListener());
+        }
         registerListener(new HandSwitchListener());
         registerListener(new LeaveJoinListener());
         registerListener(new ArmorSwitchListener());
@@ -168,6 +180,10 @@ public final class EnchantsSquared extends JavaPlugin {
 
     public static EnchantsSquared getPlugin(){
         return plugin;
+    }
+
+    public static boolean isMcMMOHooked() {
+        return mcMMOHooked;
     }
 
     public static boolean isValhallaHooked() {
@@ -275,6 +291,18 @@ public final class EnchantsSquared extends JavaPlugin {
         return projectileListener;
     }
 
+    public PrePlayerAttackEntityEventListener getPrePlayerAttackEntityEventListener() {
+        return prePlayerAttackEntityEventListener;
+    }
+
+    public McmmoSalvageListener getMcmmoSalvageListener() {
+        return mcmmoSalvageListener;
+    }
+
+    public McmmoArcaneFishingListener getMcmmoArcaneFishingListener() {
+        return mcmmoArcaneFishingListener;
+    }
+
     public static boolean isGrindstonesEnabled() {
         return grindstonesEnabled;
     }
@@ -295,7 +323,8 @@ public final class EnchantsSquared extends JavaPlugin {
                 nms = (NMS) clazz.getDeclaredConstructor().newInstance();
             }
             return nms != null;
-        } catch (Exception | Error ignored) {
+        } catch (Exception | Error e) {
+            e.printStackTrace();
             return false;
         }
     }

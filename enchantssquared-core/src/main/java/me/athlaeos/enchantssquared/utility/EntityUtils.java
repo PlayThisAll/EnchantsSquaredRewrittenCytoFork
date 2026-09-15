@@ -96,6 +96,10 @@ public class EntityUtils {
         return equipment;
     }
 
+    public static double getLuckFactor(LivingEntity e) {
+        return (1 + ((e.getAttribute(Attribute.LUCK).getValue()) * ConfigManager.getInstance().getConfig("config.yml").get().getDouble("luck_factor")));
+    }
+
     public static EntityEquipment updateEnchantments(EntityEquipment equipment, LivingEntity e, boolean getEnchantments, boolean getEquipment, boolean getHands){
         if (e.getEquipment() != null) {
             boolean included = false;

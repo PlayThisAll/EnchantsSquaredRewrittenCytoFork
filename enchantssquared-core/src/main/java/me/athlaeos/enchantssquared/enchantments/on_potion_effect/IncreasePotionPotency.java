@@ -15,6 +15,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 
 import java.util.*;
+import java.lang.reflect.InvocationTargetException;
 
 public class IncreasePotionPotency extends CustomEnchant implements TriggerOnPotionEffectEnchantment {
     private final YamlConfiguration config;
@@ -191,9 +192,14 @@ public class IncreasePotionPotency extends CustomEnchant implements TriggerOnPot
                     entity,
                     e.getOldEffect(),
                     enhancedEffect,
+                    null,
                     EntityPotionEffectEvent.Cause.POTION_DRINK,
-                    e.getOldEffect() == null ? EntityPotionEffectEvent.Action.ADDED : EntityPotionEffectEvent.Action.CHANGED,
-                    e.getOldEffect() != null);
+                    e.getOldEffect() == null
+                        ? EntityPotionEffectEvent.Action.ADDED
+                        : EntityPotionEffectEvent.Action.CHANGED,
+                    e.getOldEffect() != null
+                );
+            
             excludedPlayers.add(entity.getUniqueId());
             EnchantsSquared.getPlugin().getServer().getPluginManager().callEvent(event);
             if (!event.isCancelled()){

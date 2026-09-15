@@ -184,7 +184,7 @@ public class CurseHeavy extends CustomEnchant implements TriggerOnRegularInterva
     public void execute(Entity e, int level) {
         if (!(e instanceof LivingEntity)) return;
         if (shouldEnchantmentCancel(level, (LivingEntity) e, e.getLocation())) {
-            EntityUtils.removeUniqueAttribute((LivingEntity) e, "es_curse_heavy", Attribute.GENERIC_MOVEMENT_SPEED);
+            EntityUtils.removeUniqueAttribute((LivingEntity) e, "es_curse_heavy", Attribute.MOVEMENT_SPEED);
             return;
         }
 
@@ -198,13 +198,13 @@ public class CurseHeavy extends CustomEnchant implements TriggerOnRegularInterva
             );
         }
 
-        EntityUtils.addUniqueAttribute((LivingEntity) e, CURSE_HEAVY_UUID, "es_curse_heavy", Attribute.GENERIC_MOVEMENT_SPEED, -slow, AttributeModifier.Operation.ADD_SCALAR);
+        EntityUtils.addUniqueAttribute((LivingEntity) e, CURSE_HEAVY_UUID, "es_curse_heavy", Attribute.MOVEMENT_SPEED, -slow, AttributeModifier.Operation.ADD_SCALAR);
     }
 
     public static final UUID CURSE_HEAVY_UUID = UUID.fromString("03df8c9c-0071-44d7-8b02-3db88f060c64");
 
     @Override
     public void cleanAttribute(LivingEntity e) {
-        EntityUtils.removeUniqueAttribute(e, "es_curse_heavy", Attribute.GENERIC_MOVEMENT_SPEED);
+        EntityUtils.removeUniqueAttribute(e, "es_curse_heavy", Attribute.MOVEMENT_SPEED);
     }
 }

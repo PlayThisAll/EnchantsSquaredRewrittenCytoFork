@@ -7,6 +7,7 @@ import me.athlaeos.enchantssquared.enchantments.CustomEnchant;
 import me.athlaeos.enchantssquared.enchantments.LevelService;
 import me.athlaeos.enchantssquared.enchantments.Levels1IfPresent;
 import me.athlaeos.enchantssquared.managers.EntityEquipmentCacheManager;
+import me.athlaeos.enchantssquared.utility.EntityUtils;
 import me.athlaeos.enchantssquared.utility.ItemUtils;
 import me.athlaeos.enchantssquared.utility.Utils;
 import org.bukkit.Material;
@@ -175,7 +176,7 @@ public class Rejuvenation extends CustomEnchant implements TriggerOnRegularInter
             if (i.getType().getMaxDurability() > 0 && i.getItemMeta() instanceof Damageable){
                 int rejuvLevel = iterable.getOrDefault(i, new HashMap<>()).getOrDefault(this, 0);
                 if (rejuvLevel > 0){
-                    int durabilityToRepair = Utils.excessChance(durabilityPerSecondBase + (durabilityPerSecondLv * (rejuvLevel - 1)));
+                    int durabilityToRepair = Utils.excessChance((durabilityPerSecondBase + (durabilityPerSecondLv * (rejuvLevel - 1))) * EntityUtils.getLuckFactor((Player) e));
                     ItemUtils.damageItem((Player) e, i, -durabilityToRepair);
                 }
             }

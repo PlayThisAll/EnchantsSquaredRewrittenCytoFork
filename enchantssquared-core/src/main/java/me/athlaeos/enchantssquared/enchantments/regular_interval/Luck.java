@@ -172,13 +172,13 @@ public class Luck extends CustomEnchant implements TriggerOnRegularIntervalsEnch
     public void execute(Entity e, int level) {
         if (!(e instanceof LivingEntity)) return;
         if (shouldEnchantmentCancel(level, (LivingEntity) e, e.getLocation())) {
-            EntityUtils.removeUniqueAttribute((LivingEntity) e, "es_luck", Attribute.GENERIC_LUCK);
+            EntityUtils.removeUniqueAttribute((LivingEntity) e, "es_luck", Attribute.LUCK);
             return;
         }
 
         double luckBoost = luckBase + ((level - 1) * luckLv);
 
-        EntityUtils.addUniqueAttribute((LivingEntity) e, LUCK_UUID, "es_luck", Attribute.GENERIC_LUCK, luckBoost,
+        EntityUtils.addUniqueAttribute((LivingEntity) e, LUCK_UUID, "es_luck", Attribute.LUCK, luckBoost,
                 percentileIncrease ? AttributeModifier.Operation.ADD_SCALAR : AttributeModifier.Operation.ADD_NUMBER);
     }
 
@@ -186,6 +186,6 @@ public class Luck extends CustomEnchant implements TriggerOnRegularIntervalsEnch
 
     @Override
     public void cleanAttribute(LivingEntity e) {
-        EntityUtils.removeUniqueAttribute(e, "es_luck", Attribute.GENERIC_LUCK);
+        EntityUtils.removeUniqueAttribute(e, "es_luck", Attribute.LUCK);
     }
 }

@@ -182,13 +182,13 @@ public class Vigorous extends CustomEnchant implements TriggerOnRegularIntervals
     public void execute(Entity e, int level) {
         if (!(e instanceof LivingEntity)) return;
         if (shouldEnchantmentCancel(level, (LivingEntity) e, e.getLocation())) {
-            EntityUtils.removeUniqueAttribute((LivingEntity) e, "es_vigorous", Attribute.GENERIC_MAX_HEALTH);
+            EntityUtils.removeUniqueAttribute((LivingEntity) e, "es_vigorous", Attribute.MAX_HEALTH);
             return;
         }
 
         double healthBoost = healthBase + ((level - 1) * healthLv);
 
-        EntityUtils.addUniqueAttribute((LivingEntity) e, HEALTH_UUID, "es_vigorous", Attribute.GENERIC_MAX_HEALTH, healthBoost,
+        EntityUtils.addUniqueAttribute((LivingEntity) e, HEALTH_UUID, "es_vigorous", Attribute.MAX_HEALTH, healthBoost,
                 percentileIncrease ? AttributeModifier.Operation.ADD_SCALAR : AttributeModifier.Operation.ADD_NUMBER);
 
         if (cleanup && e instanceof Player) stripEnchantmentAttributesFromAllEquipment((Player) e);
@@ -210,13 +210,13 @@ public class Vigorous extends CustomEnchant implements TriggerOnRegularIntervals
         if (ItemUtils.isAirOrNull(i)) return;
         ItemMeta meta = i.getItemMeta();
         if (meta == null) return;
-        if (meta.getAttributeModifiers(Attribute.GENERIC_MAX_HEALTH) == null) return;
-        meta.removeAttributeModifier(Attribute.GENERIC_MAX_HEALTH);
+        if (meta.getAttributeModifiers(Attribute.MAX_HEALTH) == null) return;
+        meta.removeAttributeModifier(Attribute.MAX_HEALTH);
         i.setItemMeta(meta);
     }
 
     @Override
     public void cleanAttribute(LivingEntity e) {
-        EntityUtils.removeUniqueAttribute(e, "es_vigorous", Attribute.GENERIC_MAX_HEALTH);
+        EntityUtils.removeUniqueAttribute(e, "es_vigorous", Attribute.MAX_HEALTH);
     }
 }

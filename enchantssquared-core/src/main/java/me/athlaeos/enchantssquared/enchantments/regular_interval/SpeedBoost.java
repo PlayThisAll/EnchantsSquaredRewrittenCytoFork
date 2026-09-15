@@ -170,19 +170,19 @@ public class SpeedBoost extends CustomEnchant implements TriggerOnRegularInterva
     public void execute(Entity e, int level) {
         if (!(e instanceof LivingEntity)) return;
         if (shouldEnchantmentCancel(level, (LivingEntity) e, e.getLocation())) {
-            EntityUtils.removeUniqueAttribute((LivingEntity) e, "es_speed_boost", Attribute.GENERIC_MOVEMENT_SPEED);
+            EntityUtils.removeUniqueAttribute((LivingEntity) e, "es_speed_boost", Attribute.MOVEMENT_SPEED);
             return;
         }
 
         double speedBoost = speedBase + ((level - 1) * speedLv);
 
-        EntityUtils.addUniqueAttribute((LivingEntity) e, SPEED_BOOST_UUID, "es_speed_boost", Attribute.GENERIC_MOVEMENT_SPEED, speedBoost, AttributeModifier.Operation.ADD_SCALAR);
+        EntityUtils.addUniqueAttribute((LivingEntity) e, SPEED_BOOST_UUID, "es_speed_boost", Attribute.MOVEMENT_SPEED, speedBoost, AttributeModifier.Operation.ADD_SCALAR);
     }
 
     public static final UUID SPEED_BOOST_UUID = UUID.fromString("459f6611-3126-4130-a793-5d5360df0a2e");
 
     @Override
     public void cleanAttribute(LivingEntity e) {
-        EntityUtils.removeUniqueAttribute(e, "es_speed_boost", Attribute.GENERIC_MOVEMENT_SPEED);
+        EntityUtils.removeUniqueAttribute(e, "es_speed_boost", Attribute.MOVEMENT_SPEED);
     }
 }

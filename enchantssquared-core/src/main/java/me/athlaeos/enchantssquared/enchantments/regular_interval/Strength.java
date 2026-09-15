@@ -172,13 +172,13 @@ public class Strength extends CustomEnchant implements TriggerOnRegularIntervals
     public void execute(Entity e, int level) {
         if (!(e instanceof LivingEntity)) return;
         if (shouldEnchantmentCancel(level, (LivingEntity) e, e.getLocation())) {
-            EntityUtils.removeUniqueAttribute((LivingEntity) e, "es_strength", Attribute.GENERIC_ATTACK_DAMAGE);
+            EntityUtils.removeUniqueAttribute((LivingEntity) e, "es_strength", Attribute.ATTACK_DAMAGE);
             return;
         }
 
         double damageBoost = damageBase + ((level - 1) * damageLv);
 
-        EntityUtils.addUniqueAttribute((LivingEntity) e, STRENGTH_UUID, "es_strength", Attribute.GENERIC_ATTACK_DAMAGE, damageBoost,
+        EntityUtils.addUniqueAttribute((LivingEntity) e, STRENGTH_UUID, "es_strength", Attribute.ATTACK_DAMAGE, damageBoost,
                 percentileIncrease ? AttributeModifier.Operation.ADD_SCALAR : AttributeModifier.Operation.ADD_NUMBER);
     }
 
@@ -186,6 +186,6 @@ public class Strength extends CustomEnchant implements TriggerOnRegularIntervals
 
     @Override
     public void cleanAttribute(LivingEntity e) {
-        EntityUtils.removeUniqueAttribute(e, "es_strength", Attribute.GENERIC_ATTACK_DAMAGE);
+        EntityUtils.removeUniqueAttribute(e, "es_strength", Attribute.ATTACK_DAMAGE);
     }
 }

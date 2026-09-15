@@ -1,7 +1,9 @@
 package me.athlaeos.enchantssquared.commands;
 
+import me.athlaeos.enchantssquared.EnchantsSquared;
 import me.athlaeos.enchantssquared.config.ConfigManager;
 import me.athlaeos.enchantssquared.managers.CustomEnchantManager;
+import me.athlaeos.enchantssquared.managers.RegularIntervalEnchantmentClockManager;
 import me.athlaeos.enchantssquared.utility.ChatUtils;
 import org.bukkit.command.CommandSender;
 
@@ -24,6 +26,7 @@ public class ReloadCommand implements Command {
 
 		CommandManager.getInstance().reload();
 		CustomEnchantManager.getInstance().reload();
+		EnchantsSquared.getPlugin().onEnable();
 
 		sender.sendMessage(ChatUtils.chat(reload_successful));
 		return true;
@@ -36,16 +39,16 @@ public class ReloadCommand implements Command {
 
 	@Override
 	public String getFailureMessage() {
-		return "&4/es reload";
+		return "&4/ec reload";
 	}
 
 	@Override
 	public String[] getHelpEntry() {
 		return new String[]{
 				ChatUtils.chat("&8&m                                             "),
-				ChatUtils.chat("&d/es reload"),
+				ChatUtils.chat("&d/ec reload"),
 				ChatUtils.chat("&7" + reload_description),
-				ChatUtils.chat("&7> &des.reload")
+				//ChatUtils.chat("&7> &des.reload")
 		};
 	}
 

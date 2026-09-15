@@ -22,7 +22,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 
 public class EntityDamageListener implements Listener {
 
-    @EventHandler(priority = EventPriority.HIGH)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onEntityTakeDamage(EntityDamageEvent e){
         if (!e.isCancelled() && e.getDamage() > 0 &&
                 e.getEntity() instanceof LivingEntity &&
@@ -39,7 +39,7 @@ public class EntityDamageListener implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.HIGH)
     public void onEntityDamagedByEntity(EntityDamageByEntityEvent e){
         if (e.getDamager() instanceof Player && e.getEntity() instanceof Player &&
                 (EnchantsSquared.isWorldGuardHooked() && WorldGuardHook.getHook().isPVPDenied((Player) e.getEntity()))) return;
@@ -76,9 +76,9 @@ public class EntityDamageListener implements Listener {
                         attackerEquipment.setMainHandEnchantments(CustomEnchantManager.getInstance().getItemsEnchantsFromPDC(((Trident) e.getDamager()).getItem()));
                     } else {
                         MaterialClassType mainType = MaterialClassType.getClass(attacker.getEquipment().getItemInMainHand().getType());
-                        if (!(mainType == MaterialClassType.BOWS || mainType == MaterialClassType.CROSSBOWS)){
+                        if (!(mainType == MaterialClassType.BOWS || mainType == MaterialClassType.CROSSBOWS || mainType == MaterialClassType.SPEARS)){
                             MaterialClassType offType = MaterialClassType.getClass(attacker.getEquipment().getItemInOffHand().getType());
-                            if (offType == MaterialClassType.BOWS || offType == MaterialClassType.CROSSBOWS) mainHand = false;
+                            if (offType == MaterialClassType.BOWS || offType == MaterialClassType.CROSSBOWS || offType == MaterialClassType.SPEARS) mainHand = false;
                         }
                     }
                 }

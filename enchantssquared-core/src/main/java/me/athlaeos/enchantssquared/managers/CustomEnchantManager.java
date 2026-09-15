@@ -34,6 +34,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
@@ -141,7 +142,7 @@ public class CustomEnchantManager {
     public Collection<CustomEnchant> getCompatibleEnchants(ItemStack item, GameMode combinedIn){
         Collection<CustomEnchant> possibleEnchants = new HashSet<>();
         if (ItemUtils.isAirOrNull(item)) return possibleEnchants;
-        if (item.getType() == Material.BOOK || item.getType() == Material.ENCHANTED_BOOK) return allEnchants.values();
+        if (item.getType() == Material.BOOK || item.getType() == Material.ENCHANTED_BOOK) return new HashSet<>(allEnchants.values());
         Map<CustomEnchant, Integer> existingCustomEnchantments = getItemsEnchantsFromPDC(item);
         for (CustomEnchant e : allEnchants.values()){
             // checks if the item has any conflicting custom enchantments. This isn't done with hasCustomEnchantment()
@@ -351,7 +352,16 @@ public class CustomEnchantManager {
 
             Collection<Enchantment> vanillaEnchantmentsToRemove = new HashSet<>();
             item2Enchantments.entrySet().removeIf(e -> item1Enchantments.entrySet().stream().anyMatch(i -> i.getKey().conflictsWithEnchantment(e.getKey().getType())));
-            item2.getEnchantments().forEach((key, value) -> {
+            Map<Enchantment, Integer> vanillaEnchantments = null;
+            //why do enchanted books store enchants differently??? why????
+            if(item2.getType() == Material.ENCHANTED_BOOK) {
+                if(item2.getItemMeta() instanceof EnchantmentStorageMeta meta) {
+                    vanillaEnchantments = meta.getStoredEnchants();
+                }
+            } else {
+                vanillaEnchantments = item2.getEnchantments();
+            }
+            vanillaEnchantments.forEach((key, value) -> {
                 if (item1Enchantments.keySet().stream().anyMatch(i -> i.conflictsWithEnchantment(key.getKey().getKey()))) {
                     vanillaEnchantmentsToRemove.add(key);
                 }
@@ -477,6 +487,13 @@ public class CustomEnchantManager {
             registerEnchant(new StepHeight(59, "step_height"));
             registerEnchant(new BlockReach(60, "block_reach"));
         }
+        registerEnchant(new Piercer(61, "piercer"));
+        registerEnchant(new SpeedMaster(62, "speed_master"));
+        registerEnchant(new Cowardice(63, "cowardice"));
+        registerEnchant(new VoidTouch(64, "void_touch"));
+        registerEnchant(new PainCycle(65, "pain_cycle"));
+        registerEnchant(new Overclock(66, "overclock"));
+        registerEnchant(new MaceAOE(67, "mace_aoe"));
     }
 
 

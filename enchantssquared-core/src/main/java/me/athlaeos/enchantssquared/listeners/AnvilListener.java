@@ -36,7 +36,7 @@ public class AnvilListener implements Listener {
         ItemStack item1 = a.getItem(0);
         ItemStack item2 = a.getItem(1);
         ItemStack result = a.getItem(2);
-        if (ItemUtils.isAirOrNull(item1) || ItemUtils.isAirOrNull(item2) || ItemUtils.isAirOrNull(result) || e.getRawSlot() != 2) return;
+        if (ItemUtils.isAirOrNull(item1) || ItemUtils.isAirOrNull(item2) || CustomEnchantManager.getInstance().getItemsEnchantsFromPDC(item2).isEmpty() || ItemUtils.isAirOrNull(result) || e.getRawSlot() != 2) return;
         EnchantsSquared.getPlugin().getServer().getScheduler().runTaskLater(EnchantsSquared.getPlugin(), () -> {
             a.setItem(1, null);
         }, 1L);

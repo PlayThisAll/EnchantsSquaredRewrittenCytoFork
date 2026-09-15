@@ -172,7 +172,7 @@ public class FireResistance extends CustomEnchant implements TriggerOnRegularInt
     public void execute(Entity e, int level) {
         if (!(e instanceof LivingEntity)) return;
         if (shouldEnchantmentCancel(level, (LivingEntity) e, e.getLocation())) {
-            EntityUtils.removeUniqueAttribute((LivingEntity) e, "es_fire_resistance_slow", Attribute.GENERIC_MOVEMENT_SPEED);
+            EntityUtils.removeUniqueAttribute((LivingEntity) e, "es_fire_resistance_slow", Attribute.MOVEMENT_SPEED);
             return;
         }
         LivingEntity entity = (LivingEntity) e;
@@ -181,10 +181,10 @@ public class FireResistance extends CustomEnchant implements TriggerOnRegularInt
                 new PotionEffect(PotionEffectType.FIRE_RESISTANCE, duration, 0, true, false, false)
         );
         if (e.getFireTicks() > 0){
-            EntityUtils.addUniqueAttribute(entity, FIRE_RESISTANCE_SLOW_UUID, "es_fire_resistance_slow", Attribute.GENERIC_MOVEMENT_SPEED, -slow,
+            EntityUtils.addUniqueAttribute(entity, FIRE_RESISTANCE_SLOW_UUID, "es_fire_resistance_slow", Attribute.MOVEMENT_SPEED, -slow,
                     AttributeModifier.Operation.ADD_SCALAR);
         } else {
-            EntityUtils.removeUniqueAttribute(entity, "es_fire_resistance_slow", Attribute.GENERIC_MOVEMENT_SPEED);
+            EntityUtils.removeUniqueAttribute(entity, "es_fire_resistance_slow", Attribute.MOVEMENT_SPEED);
         }
     }
 
@@ -192,6 +192,6 @@ public class FireResistance extends CustomEnchant implements TriggerOnRegularInt
 
     @Override
     public void cleanAttribute(LivingEntity e) {
-        EntityUtils.removeUniqueAttribute(e, "es_fire_resistance_slow", Attribute.GENERIC_MOVEMENT_SPEED);
+        EntityUtils.removeUniqueAttribute(e, "es_fire_resistance_slow", Attribute.MOVEMENT_SPEED);
     }
 }

@@ -169,19 +169,19 @@ public class StepHeight extends CustomEnchant implements TriggerOnRegularInterva
     public void execute(Entity e, int level) {
         if (!(e instanceof LivingEntity)) return;
         if (shouldEnchantmentCancel(level, (LivingEntity) e, e.getLocation())) {
-            EntityUtils.removeUniqueAttribute((LivingEntity) e, "es_step_height", Attribute.GENERIC_STEP_HEIGHT);
+            EntityUtils.removeUniqueAttribute((LivingEntity) e, "es_step_height", Attribute.STEP_HEIGHT);
             return;
         }
 
         double stepHeightBoost = stepHeightBase + ((level - 1) * stepHeightLv);
 
-        EntityUtils.addUniqueAttribute((LivingEntity) e, STEP_HEIGHT_UUID, "es_step_height", Attribute.GENERIC_STEP_HEIGHT, stepHeightBoost, AttributeModifier.Operation.ADD_NUMBER);
+        EntityUtils.addUniqueAttribute((LivingEntity) e, STEP_HEIGHT_UUID, "es_step_height", Attribute.STEP_HEIGHT, stepHeightBoost, AttributeModifier.Operation.ADD_NUMBER);
     }
 
     public static final UUID STEP_HEIGHT_UUID = UUID.fromString("2601f8bd-cfc4-4c8c-8ab2-6ef085e3bd6c");
 
     @Override
     public void cleanAttribute(LivingEntity e) {
-        EntityUtils.removeUniqueAttribute(e, "es_step_height", Attribute.GENERIC_STEP_HEIGHT);
+        EntityUtils.removeUniqueAttribute(e, "es_step_height", Attribute.STEP_HEIGHT);
     }
 }

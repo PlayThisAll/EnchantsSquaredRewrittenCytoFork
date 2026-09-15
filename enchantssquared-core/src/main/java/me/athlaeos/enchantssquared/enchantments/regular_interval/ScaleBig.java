@@ -171,21 +171,21 @@ public class ScaleBig extends CustomEnchant implements TriggerOnRegularIntervals
     public void execute(Entity e, int level) {
         if (!(e instanceof LivingEntity)) return;
         if (shouldEnchantmentCancel(level, (LivingEntity) e, e.getLocation())) {
-            EntityUtils.removeUniqueAttribute((LivingEntity) e, "es_scale2_scale", Attribute.GENERIC_SCALE);
-            EntityUtils.removeUniqueAttribute((LivingEntity) e, "es_scale2_block_reach", Attribute.PLAYER_BLOCK_INTERACTION_RANGE);
-            EntityUtils.removeUniqueAttribute((LivingEntity) e, "es_scale2_entity_reach", Attribute.PLAYER_ENTITY_INTERACTION_RANGE);
+            EntityUtils.removeUniqueAttribute((LivingEntity) e, "es_scale2_scale", Attribute.SCALE);
+            EntityUtils.removeUniqueAttribute((LivingEntity) e, "es_scale2_block_reach", Attribute.BLOCK_INTERACTION_RANGE);
+            EntityUtils.removeUniqueAttribute((LivingEntity) e, "es_scale2_entity_reach", Attribute.ENTITY_INTERACTION_RANGE);
             return;
         }
 
         double scaleBoost = scaleBase + ((level - 1) * scaleLv);
 
-        EntityUtils.addUniqueAttribute((LivingEntity) e, SCALE_UUID, "es_scale2_scale", Attribute.GENERIC_SCALE, scaleBoost, AttributeModifier.Operation.ADD_SCALAR);
+        EntityUtils.addUniqueAttribute((LivingEntity) e, SCALE_UUID, "es_scale2_scale", Attribute.SCALE, scaleBoost, AttributeModifier.Operation.ADD_SCALAR);
         if (affectsReach){
-            EntityUtils.addUniqueAttribute((LivingEntity) e, BLOCK_REACH_UUID, "es_scale2_block_reach", Attribute.PLAYER_BLOCK_INTERACTION_RANGE, scaleBoost, AttributeModifier.Operation.ADD_SCALAR);
-            EntityUtils.addUniqueAttribute((LivingEntity) e, ENTITY_REACH_UUID, "es_scale2_entity_reach", Attribute.PLAYER_ENTITY_INTERACTION_RANGE, scaleBoost, AttributeModifier.Operation.ADD_SCALAR);
+            EntityUtils.addUniqueAttribute((LivingEntity) e, BLOCK_REACH_UUID, "es_scale2_block_reach", Attribute.BLOCK_INTERACTION_RANGE, scaleBoost, AttributeModifier.Operation.ADD_SCALAR);
+            EntityUtils.addUniqueAttribute((LivingEntity) e, ENTITY_REACH_UUID, "es_scale2_entity_reach", Attribute.ENTITY_INTERACTION_RANGE, scaleBoost, AttributeModifier.Operation.ADD_SCALAR);
         } else {
-            EntityUtils.removeUniqueAttribute((LivingEntity) e, "es_scale2_block_reach", Attribute.PLAYER_BLOCK_INTERACTION_RANGE);
-            EntityUtils.removeUniqueAttribute((LivingEntity) e, "es_scale2_entity_reach", Attribute.PLAYER_ENTITY_INTERACTION_RANGE);
+            EntityUtils.removeUniqueAttribute((LivingEntity) e, "es_scale2_block_reach", Attribute.BLOCK_INTERACTION_RANGE);
+            EntityUtils.removeUniqueAttribute((LivingEntity) e, "es_scale2_entity_reach", Attribute.ENTITY_INTERACTION_RANGE);
         }
     }
 
@@ -195,8 +195,8 @@ public class ScaleBig extends CustomEnchant implements TriggerOnRegularIntervals
 
     @Override
     public void cleanAttribute(LivingEntity e) {
-        EntityUtils.removeUniqueAttribute(e, "es_scale2_scale", Attribute.GENERIC_SCALE);
-        EntityUtils.removeUniqueAttribute(e, "es_scale2_block_reach", Attribute.PLAYER_BLOCK_INTERACTION_RANGE);
-        EntityUtils.removeUniqueAttribute(e, "es_scale2_entity_reach", Attribute.PLAYER_ENTITY_INTERACTION_RANGE);
+        EntityUtils.removeUniqueAttribute(e, "es_scale2_scale", Attribute.SCALE);
+        EntityUtils.removeUniqueAttribute(e, "es_scale2_block_reach", Attribute.BLOCK_INTERACTION_RANGE);
+        EntityUtils.removeUniqueAttribute(e, "es_scale2_entity_reach", Attribute.ENTITY_INTERACTION_RANGE);
     }
 }
