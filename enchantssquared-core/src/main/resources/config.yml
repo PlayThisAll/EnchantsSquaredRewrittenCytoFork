@@ -96,7 +96,7 @@ enchantment_configuration:
     max_level: 1 # Maximum level for this enchantment, players will be able to reach this level through the anvil
     max_level_table: 1 # Maximum level attainable through the enchantment table
     enabled: true # If disabled, enchant will not be registered at all.
-    weight: 20 # The rarity of the item in weight, lower values mean less common
+    weight: 1 # The rarity of the item in weight, lower values mean less common
     book_only: false # If true, enchant will only appear on books
     sneak_disable: true # If true, players will be able to sneak to disable the excavation effect
     nerf_excavation_speed: false # If true, players will be given mining fatigue when mining with excavation.
@@ -118,7 +118,7 @@ enchantment_configuration:
     # a lot more blocks a lot faster than it normally would. However, from my experience, players tend to complain their
     # tools break too fast if this value is set at 1, hence why it's set at 0.33 by default. If you have an economy on your
     # server it is recommended to keep excavation in mind when balancing it, because players WILL get a LOT of resources.
-    trade_enabled: true # If true, custom enchantments will appear in villager trades
+    trade_enabled: false # If true, custom enchantments will appear in villager trades
     trade_cost_base_lower: 32 # Lowest emerald cost value for a level 1 enchantment, cost is random between lower and upper value
     trade_cost_base_upper: 64 # Highest emerald cost value for a level 1 enchantment
     trade_cost_lv_lower: 8
@@ -195,8 +195,6 @@ enchantment_configuration:
     is_treasure: false
     compatible_with:
       - ALL
-    incompatible_vanilla_enchantments:
-      - mending
 
   lava_walker:
     description: '&8> Transforms lava under you within a radius of &e0&8-&e1&8-&e2&8 blocks into magma, at the cost of durability.'
@@ -821,6 +819,7 @@ enchantment_configuration:
       - SWORDS
       - BOWS
       - CROSSBOWS
+      - SPEARS
 
   poisoning:
     description: '&8> Has a &e5&8-&e10&8-&e15%&8 chance to inflict the entity you''re damaging with Poison'
@@ -849,6 +848,7 @@ enchantment_configuration:
       - SWORDS
       - BOWS
       - CROSSBOWS
+      - SPEARS
 
   lightning:
     description: '&8> Has a &e5&8-&e10&8-&e15%&8 chance to strike the enemy with lightning'
@@ -898,6 +898,8 @@ enchantment_configuration:
       - SWORDS
       - BOWS
       - CROSSBOWS
+      - MACES
+      - SPEARS
 
   stunning:
     description: '&8> Has a &e2&8-&e4%&8 chance to inflict the entity you''re damaging with a stun.'
@@ -928,6 +930,8 @@ enchantment_configuration:
       - CROSSBOWS
       - AXES
       - PICKAXES
+      - MACES
+      - SPEARS
 
   slowness:
     description: '&8> Has a &e4&8-&e8%&8 chance to inflict the entity you''re damaging with Slowness'
@@ -956,6 +960,7 @@ enchantment_configuration:
       - SWORDS
       - BOWS
       - CROSSBOWS
+      - SPEARS
 
   blinding:
     description: '&8> Has a &e2&8-&e4&8-&e6%&8 chance to inflict the entity you''re damaging with Blindness'
@@ -983,6 +988,8 @@ enchantment_configuration:
       - BOWS
       - CROSSBOWS
       - AXES
+      - MACES
+      - SPEARS
 
   shield_downer:
     description: '&8> Has a &e20&8-&e40&8-&e60%&8 chance to disable a shield for &e2&8-&e3&8-&e4&8 seconds'
@@ -1033,6 +1040,8 @@ enchantment_configuration:
       - SWORDS
       - BOWS
       - CROSSBOWS
+      - MACES
+      - SPEARS
 
   streak_damage:
     description: '&8> Reduces your damage by &c20&8-&c40%&8, &cbut &8grants you &e5&8-&e10%&8 increased damage per hit up to &e+50&8-&e100% &8damage. You lose this damage bonus when you take damage yourself. Damage penalty and bonus are halved with ranged hits'
@@ -1067,6 +1076,8 @@ enchantment_configuration:
       - BOWS
       - CROSSBOWS
       - TRIDENTS
+      - MACES
+      - SPEARS
 
   ground_stomping:
     description: '&8> Immunity to fall damage. Landing after great falls deals damage in a radius. Damage and radius increase with distance, scaling &e60&8-&e100% &8faster. While sneaking, you fall &e2.5x &8faster. Effect has a &e20&8-&e10 second &8cooldown'
@@ -1391,6 +1402,7 @@ enchantment_configuration:
     compatible_with: # Limited to weapons
       - SWORDS
       - AXES
+      - MACES
 
   damage_reduction:
     description: '&8> Grants the wearer &e10&8-&e15&8-&e20%&8 damage reduction while wearing'
