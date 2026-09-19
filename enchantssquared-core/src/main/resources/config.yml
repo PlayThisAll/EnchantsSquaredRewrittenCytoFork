@@ -457,7 +457,7 @@ enchantment_configuration:
   flight:
     description: '&8> Allows the wearer temporary flight at the cost of durability for &e5&8-&e10&8-&e15&8 seconds at a time. Recharge your flight by standing on the ground at &e1&8-&e1.5&8-&e2x&8 speed'
     enchant_name: '&7Wings %lv_roman%'
-    enabled: true
+    enabled: false
     max_level: 3
     max_level_table: 2
     # If flight_duration_base is set to 0, flight will not run out (as long as they have durability, of course)
@@ -1512,7 +1512,7 @@ enchantment_configuration:
     sword_damage_pierce: 0.5 # sword dmg mutliplier of damage that ignores any damage resistance
     potion_damage_pierce: 0 # potion bonus dmg mutliplier of damage that ignores any damage resistance
     allow_critical_hits: true # Use crits in damage calculations
-    trade_enabled: false
+    trade_enabled: true
     trade_cost_base_lower: 16
     trade_cost_base_upper: 24
     trade_cost_lv_lower: 8
@@ -1568,7 +1568,7 @@ enchantment_configuration:
   void_touch:
     description: '&8>Applies "Void Touched" status effect that, over &e3&8-&e4&8-&e5&8 seconds, increases damage up to &e30&8-&e40&8-&e50%&8 for the user'
     enchant_name: '&7Void Strike %lv_roman%'
-    enabled: true
+    enabled: false
     weight: 15
     book_only: false
     max_level: 3
