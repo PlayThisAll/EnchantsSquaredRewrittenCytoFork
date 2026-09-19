@@ -223,7 +223,7 @@ public class VoidTouch extends CustomEnchant implements TriggerOnAttackEnchantme
 
     @Override
     public String getWorldGuardFlagName() {
-        return "es-deny-void-touch";
+        return "es-deny-aoe-arrows";
     }
 
     @Override

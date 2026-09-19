@@ -30,16 +30,16 @@ public class GetEnchantMenuCommand implements Command {
 
 	@Override
 	public String getFailureMessage() {
-		return "&4/ec menu";
+		return "&4/es menu";
 	}
 
 	@Override
 	public String[] getHelpEntry() {
 		return new String[]{
 				ChatUtils.chat("&8&m                                             "),
-				ChatUtils.chat("&d/ec menu"),
+				ChatUtils.chat("&d/es menu"),
 				ChatUtils.chat("&7" + menu_description),
-				//ChatUtils.chat("&7> &des.menu")
+				ChatUtils.chat("&7> &des.menu")
 		};
 	}
 
