@@ -155,7 +155,7 @@ public class SpeedMaster extends CustomEnchant implements TriggerOnRegularInterv
 
     @Override
     public String getWorldGuardFlagName() {
-        return "es-deny-speed";
+        return "es-deny-speed-master";
     }
 
     @Override
