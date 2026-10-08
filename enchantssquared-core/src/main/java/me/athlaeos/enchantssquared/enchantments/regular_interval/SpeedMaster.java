@@ -51,11 +51,10 @@ public class SpeedMaster extends CustomEnchant implements TriggerOnRegularInterv
         this.icon = ItemUtils.getIconFromConfig(config, "enchantment_configuration.speed_master.icon", createIcon(Material.DIAMOND_SPEAR));
     }
 
-    private final LevelService mainHandLevels = new LevelsFromMainHandAndEquipment(this);
-    private final LevelService offHandLevels = new LevelsFromOffHandAndEquipment(this);
+    private final LevelService levelService = new LevelsFromAllEquipment(this);
     @Override
     public LevelService getLevelService(boolean offHand, LivingEntity entity) {
-        return offHand ? offHandLevels : mainHandLevels;
+        return levelService;
     }
 
     @Override

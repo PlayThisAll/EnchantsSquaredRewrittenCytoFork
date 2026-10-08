@@ -27,11 +27,11 @@ public class Flash extends Animation{
     public void play(Location l) {
         if (l.getWorld() == null) return;
         if (Version.currentVersionOrNewerThan(Version.MINECRAFT_1_19))
-            l.getWorld().spawnParticle(Particle.FLASH, l, 0);
-        else {
             if (MinecraftVersion.currentVersionNewerThan(MinecraftVersion.MINECRAFT_1_21_9)) {
                 l.getWorld().spawnParticle(Particle.FLASH, l, 0, Color.WHITE);
             } else l.getWorld().spawnParticle(Particle.FLASH, l, 0, size);
+        else {
+            l.getWorld().spawnParticle(Particle.FLASH, l, 0);
         }
     }
 }
