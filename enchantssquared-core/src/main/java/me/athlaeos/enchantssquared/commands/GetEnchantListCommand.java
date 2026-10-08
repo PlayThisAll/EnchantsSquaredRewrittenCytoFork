@@ -187,16 +187,16 @@ public class GetEnchantListCommand implements Command {
 
 	@Override
 	public String getFailureMessage() {
-		return "&4/ec list";
+		return "&4/es list";
 	}
 
 	@Override
 	public String[] getHelpEntry() {
 		return new String[]{
 				ChatUtils.chat("&8&m                                             "),
-				ChatUtils.chat("&d/ec list <page/enchant/search term>"),
+				ChatUtils.chat("&d/es list <page/enchant/search term>"),
 				ChatUtils.chat("&7" + list_description),
-				//ChatUtils.chat("&7> &des.list")
+				ChatUtils.chat("&7> &des.list")
 		};
 	}
 
